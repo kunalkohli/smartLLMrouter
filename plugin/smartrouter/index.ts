@@ -21,7 +21,7 @@ import http from "node:http"
 import fs from "node:fs"
 import path from "node:path"
 import { Readable } from "node:stream"
-import { Model, Provider } from "@opencode/plugin"
+import { Model, Plugin, Provider } from "@opencode/plugin"
 
 /* ------------------------------------------------------------------ config */
 
@@ -172,7 +172,9 @@ function digest(body: any) {
 
 /* ------------------------------------------------------------------ plugin */
 
-export const Smartrouter = async (ctx: any) => {
+export default Plugin.define({
+  id: "smartrouter",
+  setup: async (ctx: any) => {
   const log = (...a: unknown[]) => console.log("[smartrouter]", ...a)
   const directory: string = ctx?.location?.directory ?? ctx?.directory ?? process.cwd()
   const cfg = loadConfig(directory)
@@ -404,7 +406,8 @@ export const Smartrouter = async (ctx: any) => {
       `go key=${keys.go ? "✓" : "✗"} openai key=${keys.openai ? "✓" : "✗"} typesafe key=${keys.typesafe ? "✓" : "✗"}`,
   )
 
-  return {}
-}
+  return () => server.close()
+  },
+})
 
 export default Smartrouter
