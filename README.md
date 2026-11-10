@@ -6,13 +6,15 @@ Smart Router turns your coding agent's model selector into a cost lever. Instead
 
 ```mermaid
 flowchart LR
-    P["① Plan<br/>top planner model<br/>(astra / opus / mythos…)"] -->|"plan done"| J["② Classify<br/>Jev (System One)<br/>≈$0.00003 · ≈0.1s"]
+    P["① Plan — your top model<br/>(passthrough in plan agent)"] -->|"plan → build switch"| J["② Classify once<br/>Jev (System One)<br/>≈$0.00003 · ≈0.1s"]
     J --> C{"confidence<br/>gate"}
-    C -->|high| B["③ Build<br/>cheapest sufficient tier"]
+    C -->|high| B["③ Build<br/>cheapest sufficient tier<br/>cached for the session"]
     C -->|low| U["ask you → confirm"]
     U --> B
     B --> T["④ Telemetry<br/>tokens × pricing →<br/>savings vs always-top"]
 ```
+
+> **You only ever pick `smartrouter/auto.`** The plugin registers it as a normal OpenCode model and proxies every request: plan-agent traffic passes through to your top model untouched; when you make the normal plan→build switch, one Jev call classifies the task and the whole session builds on the routed tier. No slash commands, no visible model switching.
 
 > **Explore the full interactive diagram:** [`docs/model-router.html`](docs/model-router.html) — download it and open in a browser (GitHub only renders the file's text). Lanes, cards, and guided views explain every step of the flow.
 
