@@ -409,5 +409,3 @@ export default Plugin.define({
   return () => server.close()
   },
 })
-
-export default Smartrouter
