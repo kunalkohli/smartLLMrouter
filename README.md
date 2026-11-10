@@ -14,6 +14,9 @@ flowchart LR
     B --> T["④ Telemetry<br/>tokens × pricing →<br/>savings vs always-top"]
 ```
 
+<img width="1308" height="669" alt="image" src="https://github.com/user-attachments/assets/c9f549d7-af40-47e2-8914-9fe90739d145" />
+
+
 > **Explore the full interactive diagram:** [`docs/model-router.html`](docs/model-router.html) — download it and open in a browser (GitHub only renders the file's text). Lanes, cards, and guided views explain every step of the flow.
 
 ## Why
