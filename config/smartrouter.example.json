@@ -1,0 +1,27 @@
+{
+  "//": "Smart Router configuration — copy to .opencode/smartrouter.json in your workspace. Values may be 'env:VARNAME' (read from the OpenCode server environment) or a literal. Never put a raw key in this file.",
+  "planner": "openai/gpt-6-astra",
+  "fallbackPlanner": "go/gpt-6-luna",
+  "tiers": {
+    "flash": "go/glm-5.3-flash",
+    "mid": "go/gpt-6-luna",
+    "top": "openai/gpt-6-astra"
+  },
+  "tierFallback": {
+    "flash": "go/longcat-2.5-free",
+    "mid": "go/gpt-5.6-luna",
+    "top": "go/qwen3.8-max"
+  },
+  "aux": {
+    "title": "go/glm-5.3-flash",
+    "compaction": "go/gpt-6-luna"
+  },
+  "keys": {
+    "go": "env:OPENCODE_GO_API_KEY",
+    "openai": "env:OPENAI_API_KEY"
+  },
+  "typesafeKey": "env:TYPESAFE_API_KEY",
+  "autoSwitchAt": 0.8,
+  "announce": true,
+  "port": 0
+}

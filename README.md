@@ -6,15 +6,16 @@ Smart Router turns your coding agent's model selector into a cost lever. Instead
 
 ```mermaid
 flowchart LR
-    P["① Plan<br/>top planner model<br/>(astra / opus / mythos…)"] -->|"plan done"| J["② Classify<br/>Jev (System One)<br/>≈$0.00003 · ≈0.1s"]
+    U["You pick<br/>smartrouter / auto<br/>(the only pick)"] --> P["① Plan — top planner model<br/>plugin proxy passthrough"]
+    P -->|"plan → build switch"| J["② Classify once<br/>Jev (System One)<br/>≈$0.00003 · ≈0.1s"]
     J --> C{"confidence<br/>gate"}
-    C -->|high| B["③ Build<br/>cheapest sufficient tier"]
-    C -->|low| U["ask you → confirm"]
-    U --> B
+    C -->|high| B["③ Build<br/>cheapest sufficient tier<br/>— cached for the session"]
+    C -->|low| U2["ask you → confirm"]
+    U2 --> B
     B --> T["④ Telemetry<br/>tokens × pricing →<br/>savings vs always-top"]
 ```
 
-<img width="1308" height="669" alt="image" src="https://github.com/user-attachments/assets/c9f549d7-af40-47e2-8914-9fe90739d145" />
+![Smart Router flow](docs/model-router.png)
 
 
 > **Explore the full interactive diagram:** [`docs/model-router.html`](docs/model-router.html) — download it and open in a browser (GitHub only renders the file's text). Lanes, cards, and guided views explain every step of the flow.
@@ -65,13 +66,25 @@ Three sample plans, one Jev call each, tier composed in code:
 
 ## Roadmap
 
-This lands in **phased PRs** — the first PR (this one) is documentation only:
+This lands in **phased PRs**:
 
-- **PR 1 (this):** design, diagram, cost case.
-- **PR 2:** OpenCode plugin — fake `Smart Router` provider + in-process proxy; plan-agent passthrough on your planner model. *Pick `smartrouter/auto`, everything behaves as your planner.*
-- **PR 3:** Jev classification + confidence gate + tier routing across your connected providers (OpenAI / GLM-5.3 / free models).
-- **PR 4:** decision log, token telemetry, pricing table, savings report vs the always-top baseline.
-- **PR 5+:** failure-escalation (re-route up on repeated build failures), more provider families, extract the router core as a standalone library.
+- **PR 1 (merged):** design, diagram, cost case.
+- **PR 2 (this):** the OpenCode plugin — a fake `Smart Router` provider (`smartrouter/auto`) backed by an in-process proxy: plan-agent **passthrough** on your planner model, **one Jev classification** on the first build request of each session, the **confidence gate**, and tier routing across your connected providers (OpenAI / GLM-5.3 / free models). *Pick `smartrouter/auto` — planning always happens on your planner; the build routes itself.*
+- **PR 3:** decision log, token telemetry, pricing table, savings report vs the always-top baseline.
+- **PR 4+:** failure-escalation (re-route up on repeated build failures), more provider families, extract the router core as a standalone library.
+
+## Install (PR 2)
+
+1. **Clone the repo:** `git clone https://github.com/kunalkohli/smartLLMrouter`
+2. **Load the plugin** into any OpenCode workspace — symlink it:
+   `ln -s <repo-path>/plugin/smartrouter .opencode/plugins/smartrouter`
+   …or reference the path in `opencode.jsonc`: `"plugins": ["<repo-path>/plugin/smartrouter"]`
+3. **Configure** (optional): `cp config/smartrouter.example.json .opencode/smartrouter.json` — defaults are sane; this is where tiers and env indirection live. It ships **only `env:` placeholders**, never keys.
+4. **Export keys** into the environment OpenCode runs in:
+   - `OPENCODE_GO_API_KEY` — OpenCode Go models (GLM-5.3-Flash, GPT-6 Luna, the free tier)
+   - `OPENAI_API_KEY` — your top planner; *without it planning runs on Go and logs the fallback once*
+   - `TYPESAFE_API_KEY` — Jev classifier; *without it builds pass through to the planner and nothing routes*
+5. **Restart OpenCode** → `/models` → pick **Smart Router (auto)**. Plan as usual; on the plan→build switch the session routes itself — no slash commands, no visible model switching.
 
 ## Security
 
