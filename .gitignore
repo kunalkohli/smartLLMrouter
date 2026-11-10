@@ -1,0 +1,11 @@
+.env
+.env.*
+*.env
+jev_key
+*.key
+*.pem
+secrets*
+.DS_Store
+node_modules/
+review-*/
+dist/
