@@ -9,3 +9,4 @@ secrets*
 node_modules/
 review-*/
 dist/
+.opencode/smartrouter/

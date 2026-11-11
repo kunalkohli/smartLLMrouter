@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1080" viewBox="0 0 1700 1080" role="img" aria-labelledby="title desc">
   <title id="title">Smart Router — pencil architecture</title>
-  <desc id="desc">An icon-based architecture sketch grouped like a cloud reference diagram: your workspace, Smart Router inside OpenCode, and the connected model workflow. The working solid path uses the existing OpenAI sign-in and Astra for Plan and Build. Dashed paths show planned Jev classification, confidence gating, confirmation, tier routing, session cache, and measurement.</desc>
+  <desc id="desc">An icon-based pencil architecture: workspace, Smart Router inside OpenCode, and connected model workflow. Solid paths show Astra planning, Jev family/model classification, confidence approval, native free or Terra/Sol builds, and session caching. Astra is never used for Build. Dashed paths show the future savings report.</desc>
   <defs>
     <filter id="paper">
       <feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="3" seed="9" result="grain"/>
@@ -133,29 +133,29 @@
     <!-- Working native path. All connectors sit behind the service symbols. -->
     <path class="flow" d="M218 260 L421 260"/>
     <path class="flow" d="M535 260 L801 260"/>
-    <path class="flow" d="M909 260 L1146 260"/>
+    <path class="flow" d="M1200 449 L1200 409 L1074 409 Q1061 409 1061 393 L1061 273 Q1061 260 1074 260 L1145 260"/>
     <path class="flow" d="M1255 260 L1490 260"/>
     <path class="flow" d="M108 547 L58 547 Q46 547 46 534 L46 272 Q46 260 58 260 L103 260"/>
     <path class="flow" d="M530 456 L603 456 Q616 456 616 441 L616 260"/>
     <text class="tiny" x="334" y="242">select</text>
     <text class="tiny" x="666" y="242">native provider</text>
-    <text class="tiny" x="1029" y="242">build, for now</text>
+    <text class="tiny" x="1335" y="430">selected native model</text>
     <text class="tiny" x="1373" y="242">record</text>
 
-    <!-- Planned plan digest -> classifier -> confidence gate. -->
-    <path class="next" d="M855 390 L855 463"/>
+    <!-- Finished plan -> one classifier call -> native build model. -->
+    <path class="flow" d="M855 390 L855 463"/>
     <text class="tiny blue" x="918" y="414">Plan → Build</text>
-    <path class="next" d="M855 613 L855 650 L533 650"/>
+    <path class="flow" d="M855 613 L855 650 L533 650"/>
     <text class="tiny blue" x="705" y="630">finished plan</text>
-    <path class="next" d="M478 767 L478 782"/>
-    <path class="next" d="M529 830 L978 830 L978 706 L1040 706"/>
+    <path class="flow" d="M478 767 L478 782"/>
+    <path class="flow" d="M529 830 L978 830 L978 706 L1040 706"/>
     <text class="small blue" x="801" y="810">high confidence</text>
-    <path class="next" d="M423 830 L216 830"/>
+    <path class="flow" d="M423 830 L216 830"/>
     <text class="tiny blue" x="339" y="810">low confidence</text>
-    <path class="next" d="M151 947 L151 971 L1005 971 L1005 752 L1040 752"/>
+    <path class="flow" d="M151 947 L151 971 L1005 971 L1005 752 L1040 752"/>
     <text class="tiny blue" x="802" y="955">your confirmation</text>
-    <path class="next" d="M1200 801 L1200 864"/>
-    <path class="next" d="M1251 908 L1407 908 L1407 779 L1389 779"/>
+    <path class="flow" d="M1200 801 L1200 864"/>
+    <path class="flow" d="M1251 908 L1407 908 L1407 779 L1389 779"/>
     <path class="next" d="M1392 650 L1491 650"/>
     <text class="tiny blue" x="1443" y="629">usage</text>
 
@@ -183,12 +183,12 @@
     <text x="478" y="538">Existing OpenAI sign-in</text>
     <text class="small" x="478" y="565">Your subscription allowance</text>
 
-    <path class="future-hex" d="M450 602 L505 602 L533 650 L505 698 L450 698 L422 650 Z"/>
+    <path class="hex" d="M450 602 L505 602 L533 650 L505 698 L450 698 L422 650 Z"/>
     <use href="#classifier" x="435" y="607" width="86" height="86"/>
     <text class="blue" x="478" y="731">Jev classifier</text>
     <text class="tiny" x="478" y="754">Once per plan · separate service</text>
 
-    <path class="future-hex" d="M450 782 L505 782 L533 830 L505 878 L450 878 L422 830 Z"/>
+    <path class="hex" d="M450 782 L505 782 L533 830 L505 878 L450 878 L422 830 Z"/>
     <use href="#gate" x="435" y="786" width="86" height="86"/>
     <text class="blue" x="478" y="911">Tier + confidence gate</text>
     <text class="tiny" x="478" y="936">Infra / security risk guards</text>
@@ -199,35 +199,35 @@
     <use href="#brain" x="810" y="216" width="89" height="89"/>
     <text x="855" y="342">Astra planner</text>
     <text class="small" x="855" y="368">Reason + make a plan</text>
-    <path class="future-hex" d="M827 468 L882 468 L910 516 L882 564 L827 564 L799 516 Z"/>
+    <path class="hex" d="M827 468 L882 468 L910 516 L882 564 L827 564 L799 516 Z"/>
     <use href="#document" x="811" y="472" width="88" height="88"/>
     <text class="blue" x="855" y="599">Plan digest</text>
 
-    <!-- Current Build stays Astra. Planned tiers are a nested service boundary. -->
+    <!-- The selected native executor is never Astra. -->
     <path class="hex" d="M1173 212 L1228 212 L1256 260 L1228 308 L1173 308 L1145 260 Z"/>
     <path class="echo" d="M1171 209 L1231 210 L1259 260 L1230 311 L1171 311 L1142 260 Z"/>
     <use href="#tools" x="1157" y="217" width="87" height="87"/>
-    <text x="1200" y="342">Astra executor</text>
-    <text class="small" x="1200" y="368">Current pre-Jev stage</text>
+    <text x="1200" y="342">Selected executor</text>
+    <text class="small" x="1200" y="368">Native provider · no Astra</text>
 
-    <path d="M1041 449 L1387 451 L1390 800 L1038 798 Z" fill="#f8faf4" fill-opacity=".85" stroke="#819293" stroke-width="1.6" stroke-dasharray="7 5"/>
-    <text class="small blue" x="1213" y="480">NEXT: cheapest sufficient tier</text>
-    <path class="future-hex" d="M1109 510 L1154 510 L1177 549 L1154 588 L1109 588 L1086 549 Z"/>
+    <path d="M1041 449 L1387 451 L1390 800 L1038 798 Z" fill="#f8faf4" fill-opacity=".85" stroke="#819293" stroke-width="1.6"/>
+    <text class="small blue" x="1213" y="480">Jev selects the build model</text>
+    <path class="hex" d="M1109 510 L1154 510 L1177 549 L1154 588 L1109 588 L1086 549 Z"/>
     <use href="#flash" x="1098" y="516" width="68" height="68"/>
-    <text x="1132" y="621">Flash</text>
-    <text class="tiny" x="1132" y="645">mechanical</text>
+    <text x="1132" y="621">Free</text>
+    <text class="tiny" x="1132" y="645">GLM + others</text>
 
-    <path class="future-hex" d="M1270 510 L1315 510 L1338 549 L1315 588 L1270 588 L1247 549 Z"/>
+    <path class="hex" d="M1270 510 L1315 510 L1338 549 L1315 588 L1270 588 L1247 549 Z"/>
     <use href="#blocks" x="1258" y="516" width="68" height="68"/>
-    <text x="1293" y="621">Mid</text>
-    <text class="tiny" x="1293" y="645">feature work</text>
+    <text x="1293" y="621">Terra</text>
+    <text class="tiny" x="1293" y="645">OpenAI · routine</text>
 
-    <path class="future-hex" d="M1177 654 L1222 654 L1245 693 L1222 732 L1177 732 L1154 693 Z"/>
+    <path class="hex" d="M1177 654 L1222 654 L1245 693 L1222 732 L1177 732 L1154 693 Z"/>
     <use href="#brain" x="1165" y="659" width="70" height="70"/>
-    <text x="1200" y="763">Top</text>
-    <text class="tiny" x="1200" y="788">architecture / high risk</text>
+    <text x="1200" y="763">Sol</text>
+    <text class="tiny" x="1200" y="788">OpenAI · complex / risky</text>
 
-    <path class="future-hex" d="M1177 869 L1222 869 L1245 908 L1222 947 L1177 947 L1154 908 Z"/>
+    <path class="hex" d="M1177 869 L1222 869 L1245 908 L1222 947 L1177 947 L1154 908 Z"/>
     <use href="#cache" x="1165" y="873" width="70" height="70"/>
     <text class="small blue" x="1200" y="981">Session cache · reuse tier</text>
 
@@ -236,7 +236,7 @@
     <path class="echo" d="M1516 209 L1576 210 L1604 260 L1575 311 L1516 311 L1487 260 Z"/>
     <use href="#receipt" x="1502" y="216" width="87" height="87"/>
     <text x="1545" y="342">Route receipt</text>
-    <text class="small" x="1545" y="368">Alias → Astra</text>
+    <text class="small" x="1545" y="368">Model + confidence</text>
 
     <path class="future-hex" d="M1518 602 L1573 602 L1601 650 L1573 698 L1518 698 L1490 650 Z"/>
     <use href="#chart" x="1502" y="607" width="87" height="87"/>

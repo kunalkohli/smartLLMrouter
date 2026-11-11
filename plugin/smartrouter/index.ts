@@ -1,6 +1,8 @@
 /**
  * Smart Router — native mode defaults to `openai/smartrouter-auto`, an Astra
- * alias using OpenCode's existing OAuth connection. No proxy or Jev in this mode.
+ * alias using OpenCode's existing OAuth connection for Plan. On the first Build
+ * prompt, Jev selects an eligible native model and switches the session to it.
+ * Astra is Plan-only; OpenAI builds are Terra/Sol, or use keyless free models.
  *
  * Explicit `mode: "api-proxy"` retains the earlier API-key-only prototype below
  * (`smartrouter/auto`). It is NOT subscription-backed. That prototype:
@@ -184,7 +186,22 @@ export default Plugin.define({
   const cfg = loadConfig(directory)
   // Default to OpenCode's native subscription flow, before resolving any API
   // keys or starting the legacy proxy. API billing requires explicit opt-in.
-  if (cfg.mode === "native") return setupNativePlanner(ctx, cfg.planner)
+  if (cfg.mode === "native") return setupNativePlanner(ctx, cfg.planner, {
+    autoSwitchAt: cfg.autoSwitchAt,
+    buildModels: cfg.nativeBuildModels,
+    getTypesafeKey: () => {
+      const key = resolve(cfg.typesafeKey)
+      if (key) return key
+      if (!cfg.typesafeKeyFile) return ""
+      try { return fs.readFileSync(path.resolve(directory, cfg.typesafeKeyFile), "utf8").trim() }
+      catch { throw new Error("Smart Router: configured Typesafe key file could not be read. Build stopped; no Astra fallback.") }
+    },
+    log: async (record) => {
+      const folder = path.join(directory, ".opencode", "smartrouter")
+      await fs.promises.mkdir(folder, { recursive: true })
+      await fs.promises.appendFile(path.join(folder, "decisions.jsonl"), JSON.stringify(record) + "\n", { mode: 0o600 })
+    },
+  })
   if (cfg.mode !== "api-proxy") throw new Error(`Smart Router: unsupported mode "${cfg.mode}"`)
   const keys = {
     go: resolve(cfg.keys.go),
@@ -312,6 +329,11 @@ export default Plugin.define({
 
       const { ref, phase } = await routeFor(sid, kind, agent, body)
       const { endpoint, model } = parseRef(ref)
+      // Even the opt-in legacy proxy must not execute Astra outside Plan.
+      if (agent !== "plan" && /astra/i.test(model)) {
+        res.writeHead(409, { "content-type": "application/json" })
+        return res.end(JSON.stringify({ error: { message: "Smart Router: Astra is Plan-only. Build stopped; configure a non-Astra build model.", type: "smartrouter_policy" } }))
+      }
       const base = ENDPOINTS[endpoint]
       const key = keys[endpoint as keyof typeof keys]
 
