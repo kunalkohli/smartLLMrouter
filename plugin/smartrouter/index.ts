@@ -1,7 +1,9 @@
 /**
- * Smart Router — the OpenCode plugin behind `smartrouter/auto`.
+ * Smart Router — native mode defaults to `openai/smartrouter-auto`, an Astra
+ * alias using OpenCode's existing OAuth connection. No proxy or Jev in this mode.
  *
- * You pick ONE model in OpenCode's picker: `Smart Router (auto)`. This plugin:
+ * Explicit `mode: "api-proxy"` retains the earlier API-key-only prototype below
+ * (`smartrouter/auto`). It is NOT subscription-backed. That prototype:
  *   1. registers a fake provider "smartrouter" with a single model "auto",
  *   2. spawns an in-process HTTP proxy on 127.0.0.1 that the provider points at,
  *   3. stamps every proxied request with the session / agent / kind, and routes:
@@ -22,12 +24,14 @@ import fs from "node:fs"
 import path from "node:path"
 import { Readable } from "node:stream"
 import { Model, Plugin, Provider } from "@opencode/plugin"
+import { setupNativePlanner } from "./native-planner.ts"
 
 /* ------------------------------------------------------------------ config */
 
 type Ref = string // "<endpoint>/<model>" — endpoint: "openai" | "go"
 
 const DEFAULTS = {
+  mode: "native",
   planner: "openai/gpt-6-astra",
   fallbackPlanner: "go/gpt-6-luna",
   tiers: { flash: "go/glm-5.3-flash", mid: "go/gpt-6-luna", top: "openai/gpt-6-astra" },
@@ -178,6 +182,10 @@ export default Plugin.define({
   const log = (...a: unknown[]) => console.log("[smartrouter]", ...a)
   const directory: string = ctx?.location?.directory ?? ctx?.directory ?? process.cwd()
   const cfg = loadConfig(directory)
+  // Default to OpenCode's native subscription flow, before resolving any API
+  // keys or starting the legacy proxy. API billing requires explicit opt-in.
+  if (cfg.mode === "native") return setupNativePlanner(ctx, cfg.planner)
+  if (cfg.mode !== "api-proxy") throw new Error(`Smart Router: unsupported mode "${cfg.mode}"`)
   const keys = {
     go: resolve(cfg.keys.go),
     openai: resolve(cfg.keys.openai),

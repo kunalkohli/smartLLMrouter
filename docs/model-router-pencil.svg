@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1200" viewBox="0 0 1800 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Smart Router: the complete workflow, sketched in pencil</title>
+  <desc id="desc">Solid graphite shows the working native OpenAI alias and subscription-backed Astra for Plan and Build. Dashed blue shows future plan-to-build Jev classification, confidence gating, tier routing, session caching, and measurement. Jev is separate from the model subscription.</desc>
+  <defs>
+    <filter id="paper">
+      <feTurbulence type="fractalNoise" baseFrequency=".72" numOctaves="3" seed="8" result="noise"/>
+      <feColorMatrix in="noise" type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".035"/></feComponentTransfer>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+    <filter id="pencil" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="2" seed="3" result="grain"/>
+      <feDisplacementMap in="SourceGraphic" in2="grain" scale=".65" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M2 2 L10 6 L2 10" fill="none" stroke="#44443f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="blue-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M2 2 L10 6 L2 10" fill="none" stroke="#537183" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      text { font-family: 'Chalkboard SE', 'Comic Sans MS', cursive; fill: #353731; font-size: 24px; }
+      .lane { font-size: 23px; letter-spacing: 2px; fill: #6b6a60; }
+      .heading { font-size: 27px; }
+      .small { font-size: 21px; fill: #64675e; }
+      .tiny { font-size: 19px; fill: #64675e; }
+      .blue { fill: #426478; }
+      .edge { fill: none; stroke: #44443f; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow); }
+      .next { fill: none; stroke: #537183; stroke-width: 2; stroke-dasharray: 8 7; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#blue-arrow); }
+      .box { fill: #fcfaf3; stroke: #4d4c43; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .future { fill: #f7f9f7; stroke: #537183; stroke-width: 2; stroke-dasharray: 8 6; stroke-linecap: round; stroke-linejoin: round; }
+      .echo { fill: none; stroke: #666658; stroke-width: .7; opacity: .35; stroke-linecap: round; }
+      .highlight { fill: none; stroke: #dbc58d; stroke-width: 15; opacity: .45; stroke-linecap: round; }
+    </style>
+  </defs>
+  <rect width="1800" height="1200" fill="#faf7ee" filter="url(#paper)"/>
+  <g filter="url(#pencil)">
+    <!-- Five lanes; only the diagram canvas, never webpage chrome. -->
+    <text class="lane" x="50" y="69">01  YOU</text>
+    <text class="lane" x="318" y="69">02  SMART ROUTER</text>
+    <text class="lane" x="784" y="69">03  PLAN</text>
+    <text class="lane" x="1123" y="69">04  BUILD</text>
+    <text class="lane" x="1494" y="69">05  MEASURE</text>
+    <path d="M46 91 Q875 87 1756 92" class="echo"/>
+    <g stroke="#b4b1a2" stroke-width="1" opacity=".35" stroke-dasharray="2 10">
+      <path d="M286 125 L285 1040"/><path d="M750 124 L752 1038"/>
+      <path d="M1085 126 L1082 1037"/><path d="M1469 126 L1468 1037"/>
+    </g>
+
+    <!-- Working native path. -->
+    <path class="edge" d="M258 227 Q277 225 309 227"/>
+    <path class="edge" d="M710 227 Q745 225 775 227"/>
+    <path class="edge" d="M1051 227 Q1073 225 1113 227"/>
+    <path class="edge" d="M1437 227 Q1459 225 1487 227"/>
+
+    <path class="box" d="M51 162 Q149 159 254 163 L257 304 Q151 308 49 303 Z"/>
+    <path class="echo" d="M53 160 L259 161 L260 306 L51 308"/>
+    <text x="71" y="202">Pick one model:</text>
+    <text x="71" y="242">Smart Router</text>
+    <text x="71" y="276">(auto)</text>
+    <text class="small" x="67" y="350">Start in Plan mode</text>
+
+    <path class="box" d="M315 161 Q506 159 707 163 L710 306 Q505 309 313 304 Z"/>
+    <path class="echo" d="M317 158 L712 161 L713 308 L315 310"/>
+    <text class="heading" x="338" y="204">Native OpenAI alias</text>
+    <text class="small" x="338" y="246">openai/smartrouter-auto</text>
+    <text class="small" x="338" y="284">Actual model: gpt-6-astra</text>
+    <path class="highlight" d="M348 348 Q513 344 677 347"/>
+    <text class="small" x="340" y="351">No custom API-key proxy</text>
+
+    <path class="box" d="M782 161 Q910 158 1048 162 L1051 306 Q909 309 779 305 Z"/>
+    <path class="echo" d="M784 158 L1052 159 L1054 309 L782 310"/>
+    <text class="heading" x="805" y="205">Astra plans</text>
+    <text class="small" x="805" y="247">Reason through task</text>
+    <text class="small" x="805" y="284">Produce the plan</text>
+
+    <path class="box" d="M1119 161 Q1274 158 1433 163 L1437 307 Q1279 310 1116 305 Z"/>
+    <path class="echo" d="M1121 158 L1438 161 L1440 309 L1119 311"/>
+    <path class="highlight" d="M1140 204 L1396 204"/>
+    <text class="heading" x="1139" y="204">NOW: Astra builds</text>
+    <text class="small" x="1139" y="247">Same native connection</text>
+    <text class="small" x="1139" y="284">Jev is not invoked yet</text>
+
+    <path class="box" d="M1494 162 Q1624 159 1751 163 L1755 306 Q1626 309 1490 305 Z"/>
+    <path class="echo" d="M1496 159 L1756 162 L1758 309 L1492 310"/>
+    <text x="1513" y="203">Native route receipt</text>
+    <text class="small" x="1513" y="247">Alias → Astra</text>
+    <text class="small" x="1513" y="284">OAuth; no secrets</text>
+
+    <!-- Existing sign-in is a shared native-provider responsibility. -->
+    <path d="M329 388 Q870 384 1420 389 L1418 458 Q869 462 331 457 Z" fill="#ece9dc" stroke="#979382" stroke-width="1"/>
+    <text x="357" y="418">OpenCode's existing sign-in → your subscription allowance</text>
+    <text class="small" x="357" y="447">Native auth + token refresh + streaming. No separate OpenAI API key.</text>
+
+    <!-- Next-stage route: finished plan -> one classifier -> gate -> build. -->
+    <path class="next" d="M913 309 L913 377"/>
+    <path class="next" d="M914 461 L914 495 Q911 510 895 510 L681 510 L681 542"/>
+    <text class="small blue" x="934" y="491">Plan → Build</text>
+    <text class="small blue" x="329" y="499">NEXT: route the finished plan</text>
+
+    <path class="future" d="M317 545 Q508 542 706 546 L708 674 Q511 677 314 673 Z"/>
+    <text class="heading blue" x="339" y="584">Jev: classify once</text>
+    <text class="small" x="339" y="622">Plan digest → typed answers</text>
+    <text class="tiny" x="339" y="653">Separate service / classifier cost</text>
+    <path class="next" d="M511 678 L511 710"/>
+
+    <path class="future" d="M510 716 L697 788 L512 863 L325 790 Z"/>
+    <text class="blue" text-anchor="middle" x="511" y="778">Compose tier</text>
+    <text class="blue" text-anchor="middle" x="511" y="808">+ confidence</text>
+    <text class="tiny" text-anchor="middle" x="511" y="695">Risk guards: infra / security</text>
+
+    <path class="next" d="M699 788 L1106 788"/>
+    <text class="small blue" x="766" y="766">High confidence</text>
+    <path class="next" d="M512 865 L512 921"/>
+    <text class="tiny blue" x="538" y="901">Low confidence</text>
+    <path class="future" d="M321 926 Q510 923 706 926 L708 995 L318 993 Z"/>
+    <text x="343" y="968">Ask you to confirm the tier</text>
+    <path class="next" d="M710 961 L1022 961 Q1041 961 1041 941 L1041 824 Q1042 810 1058 810 L1106 810"/>
+    <text class="small blue" x="785" y="943">Your confirmation</text>
+
+    <path class="future" d="M1116 544 Q1277 542 1433 545 L1437 840 Q1277 843 1113 839 Z"/>
+    <text class="blue" x="1136" y="581">Cheapest sufficient tier</text>
+    <path d="M1133 599 L1417 598" class="echo"/>
+    <text x="1136" y="636">FLASH</text><text class="tiny" x="1242" y="636">Mechanical edits</text>
+    <text x="1136" y="679">MID</text><text class="tiny" x="1242" y="679">Ordinary features</text>
+    <text x="1136" y="722">TOP</text><text class="tiny" x="1242" y="722">Risky architecture</text>
+    <path d="M1133 743 L1417 745" class="echo"/>
+    <text class="small" x="1136" y="779">Connected, eligible model</text>
+    <text class="tiny" x="1136" y="815">No silent paid-API fallback</text>
+    <path class="next" d="M1276 846 L1276 891"/>
+    <path class="future" d="M1117 896 Q1275 893 1434 897 L1437 993 L1114 991 Z"/>
+    <text x="1137" y="937">Cache for this session</text>
+    <text class="small" x="1137" y="974">Later build turns: reuse</text>
+    <path class="next" d="M1437 944 L1452 944 L1452 829 L1436 829"/>
+
+    <path class="next" d="M1439 694 L1488 694"/>
+    <path class="future" d="M1495 600 Q1626 597 1752 602 L1755 805 L1492 802 Z"/>
+    <text class="blue" x="1513" y="640">Measure each session</text>
+    <text class="small" x="1513" y="685">Tier + confidence</text>
+    <text class="small" x="1513" y="723">Usage + latency</text>
+    <text class="small" x="1513" y="761">Allowance / cost</text>
+    <text class="tiny" x="1513" y="788">vs. always using top tier</text>
+
+    <!-- Concise legend, contained inside the drawing. -->
+    <path d="M49 1061 Q878 1056 1751 1060" class="echo"/>
+    <path class="edge" d="M53 1104 L117 1104"/>
+    <text class="small" x="133" y="1111">Working now</text>
+    <path class="next" d="M337 1104 L403 1104"/>
+    <text class="small blue" x="421" y="1111">Planned next</text>
+    <text class="small" x="714" y="1111">One selection. Keep your existing model allowance.</text>
+    <text class="tiny" x="52" y="1157">Native mode today: Astra for Plan + Build. Jev, tier switching, and savings reports are separate next stages.</text>
+  </g>
+</svg>

@@ -1,5 +1,6 @@
 {
-  "//": "Smart Router configuration — copy to .opencode/smartrouter.json in your workspace. Values may be 'env:VARNAME' (read from the OpenCode server environment) or a literal. Never put a raw key in this file.",
+  "//": "Native mode uses your existing OpenAI OAuth connection, with no API-key fallback or Jev calls. The remaining tier/key settings apply only to explicit mode: api-proxy (separately billed API prototype). Never put a raw key in this file.",
+  "mode": "native",
   "planner": "openai/gpt-6-astra",
   "fallbackPlanner": "go/gpt-6-luna",
   "tiers": {
