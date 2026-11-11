@@ -157,7 +157,10 @@ def storyboard():
 for draw in (journey, tree, swimlane, storyboard):
     draw()
 files = ['01-journey.svg', '02-decision-tree.svg', '03-swimlane.svg', '04-storyboard.svg']
+if (OUT / '05-user-sketch.svg').exists():
+    files.insert(0, '05-user-sketch.svg')
 (OUT / 'index.html').write_text('<!doctype html><meta charset="utf-8"><title>Smart Router flow variants</title>'
-    '<style>*{box-sizing:border-box}body{margin:0;padding:16px;background:#eeeae0;display:grid;grid-template-columns:1fr 1fr;gap:16px}img{display:block;width:100%;height:auto}</style>'
-    + ''.join(f'<img src="{name}" alt="Flow variant {i+1}">' for i, name in enumerate(files)))
+    '<style>*{box-sizing:border-box}body{margin:0;padding:16px;background:#eeeae0;display:grid;grid-template-columns:1fr 1fr;gap:16px}img{display:block;width:100%;height:auto}'
+    + ('a:first-child{grid-column:1/-1}' if len(files) > 4 else '') + '</style>'
+    + ''.join(f'<a href="{name}" target="_blank"><img src="{name}" alt="Pencil flow option"></a>' for name in files))
 print(f'Wrote 4 SVG variants to {OUT}')

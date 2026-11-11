@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1580" height="880" viewBox="0 0 1580 880" role="img" aria-labelledby="title desc">
+  <title id="title">Smart Router: a user-first pencil sketch</title>
+  <desc id="desc">A hand-drawn user picks smartrouter - openai in OpenCode. Astra creates the plan. After the user switches to Build and sends an instruction, one Jev call chooses a free model or OpenAI Terra/Sol. Low-confidence choices require user approval. The chosen route is cached for later Build turns. Astra is never used for Build.</desc>
+  <defs>
+    <filter id="paper">
+      <feTurbulence type="fractalNoise" baseFrequency=".74" numOctaves="3" seed="21" result="grain"/>
+      <feColorMatrix in="grain" type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".065"/></feComponentTransfer>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+    <filter id="pencil" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency=".055" numOctaves="3" seed="5" result="wobble"/>
+      <feDisplacementMap in="SourceGraphic" in2="wobble" scale="1.15" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(32)">
+      <path d="M0 0 V8" stroke="#929386" stroke-width=".6" opacity=".12"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M1.5 2 L10 6 L2 10" stroke="#74766b" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      text { font-family:'Noteworthy','Chalkboard SE','Comic Sans MS',cursive; fill:#64685f; font-size:28px; text-anchor:middle; font-weight:300; }
+      .small { font-size:23px; fill:#808377; }
+      .tiny { font-size:20px; fill:#84877b; }
+      .hand { fill:none; stroke:#777b70; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+      .echo { fill:none; stroke:#969a8b; stroke-width:.8; opacity:.34; stroke-linecap:round; }
+      .route { fill:none; stroke:#777b70; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; marker-end:url(#arrow); }
+      .conditional { fill:none; stroke:#8c9083; stroke-width:1.6; stroke-dasharray:6 6; stroke-linecap:round; marker-end:url(#arrow); }
+      .card { fill:#faf9f1; fill-opacity:.65; stroke:#7d8175; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+    </style>
+  </defs>
+
+  <rect width="1580" height="880" fill="#f8f7ef" filter="url(#paper)"/>
+  <rect x="18" y="18" width="1544" height="844" rx="8" fill="url(#hatch)" opacity=".6"/>
+  <g filter="url(#pencil)">
+    <text x="790" y="88" font-size="39" font-style="italic">Smart Router</text>
+    <text class="small" x="790" y="132">Astra plans. Jev chooses who builds.</text>
+
+    <!-- Connectors first, so they never cover the pencil symbols. -->
+    <path class="route" d="M190 310 Q253 306 323 310"/>
+    <text class="small" x="252" y="279" font-style="italic">pick model</text>
+    <path class="route" d="M663 310 Q778 308 916 310"/>
+    <text class="small" x="791" y="278" font-style="italic">Plan mode</text>
+
+    <path class="route" d="M1036 365 L1035 426 Q1035 451 1010 451 L522 451 Q495 451 495 479 L495 532"/>
+    <text class="small" x="791" y="419" font-style="italic">switch to Build + send an instruction</text>
+    <path class="route" d="M664 607 Q779 604 915 607"/>
+    <text class="small" x="789" y="572" font-style="italic">choose once</text>
+    <path class="route" d="M1289 607 L1331 607"/>
+
+    <path class="conditional" d="M328 606 Q301 607 280 606"/>
+    <path class="route" d="M1433 689 L1433 726 Q1433 748 1411 748 L1129 748 Q1106 748 1106 726 L1106 676"/>
+    <text class="small" x="1273" y="789" font-style="italic">later Build turns reuse this choice</text>
+
+    <!-- A recognizably hand-drawn person, matching the user's reference. -->
+    <path class="hand" d="M146 265 C170 266 173 304 148 306 C122 307 123 268 146 265 Z"/>
+    <path class="echo" d="M145 263 C174 264 175 308 146 309 C120 307 121 266 145 263 Z"/>
+    <path class="hand" d="M148 307 Q146 336 149 365 M112 328 Q143 324 179 328 M148 364 Q133 383 119 409 M148 364 Q161 384 179 409"/>
+    <path class="echo" d="M151 310 L151 364 L181 411 M114 330 L178 331 M146 365 L117 411"/>
+    <text x="148" y="457" font-style="italic">You</text>
+    <path class="echo" d="M125 470 Q148 472 174 469"/>
+
+    <!-- Simple, imperfect rounded pencil boxes; no infrastructure clutter. -->
+    <path class="card" d="M355 246 Q491 242 631 247 Q658 248 660 277 L662 336 Q661 364 632 366 L354 364 Q327 364 329 337 L328 276 Q328 249 355 246 Z"/>
+    <path class="echo" d="M353 243 Q494 240 633 244 Q663 248 663 278 L665 338 Q664 370 632 369 L352 368 Q324 367 325 336 L325 275 Q325 247 353 243"/>
+    <text x="495" y="295" font-size="31">smartrouter - openai</text>
+    <text class="small" x="495" y="336">your existing OpenCode sign-in</text>
+
+    <path class="card" d="M946 247 Q1035 244 1125 248 Q1151 249 1152 278 L1150 337 Q1150 365 1121 366 L948 363 Q919 364 921 336 L920 277 Q919 250 946 247 Z"/>
+    <path class="echo" d="M945 244 L1127 245 Q1156 249 1155 277 L1154 340 Q1152 369 1120 369 L946 367 Q916 364 917 335 L917 275"/>
+    <text x="1036" y="297" font-size="37" font-style="italic">Astra</text>
+    <text class="small" x="1036" y="337">Plan only</text>
+
+    <path class="card" d="M358 537 Q494 533 634 538 Q660 538 662 566 L660 643 Q660 672 632 674 L356 671 Q329 672 330 644 L329 565 Q329 540 358 537 Z"/>
+    <path class="echo" d="M356 533 Q494 529 636 534 Q665 539 665 566 L663 647 Q660 677 631 677 L354 674 Q325 673 326 644 L325 563"/>
+    <text x="495" y="580" font-size="35" font-style="italic">Jev</text>
+    <text class="small" x="495" y="620">1. Free or OpenAI?</text>
+    <text class="small" x="495" y="653">2. Which model? + confidence</text>
+
+    <path class="card" d="M949 537 Q1104 533 1260 538 Q1287 539 1288 568 L1286 644 Q1286 672 1257 674 L948 671 Q919 671 921 643 L920 566 Q919 539 949 537 Z"/>
+    <path class="echo" d="M946 534 Q1105 530 1262 534 Q1292 540 1291 567 L1290 647 Q1286 679 1256 677 L946 675 Q916 673 917 642 L916 564"/>
+    <text x="1106" y="581" font-size="31">Chosen Build model</text>
+    <text class="small" x="1106" y="621">Free: GLM / other free models</text>
+    <text class="small" x="1106" y="654">OpenAI: Terra or Sol</text>
+
+    <!-- Cylinder-shaped cache, as in the reference sketch. -->
+    <path d="M1339 570 Q1435 596 1528 570 L1528 664 Q1524 692 1433 693 Q1340 691 1338 665 Z" fill="#faf9f1" fill-opacity=".65"/>
+    <path class="hand" d="M1338 570 C1338 536 1528 535 1528 570 C1528 603 1338 603 1338 570 Z M1338 570 L1337 664 C1336 703 1528 703 1528 663 L1528 570"/>
+    <path class="echo" d="M1334 570 C1332 532 1531 531 1532 570 M1334 573 L1333 666 C1336 708 1531 707 1532 664 L1531 573"/>
+    <text x="1433" y="632" font-size="29" font-style="italic">Session</text>
+    <text x="1433" y="667" font-size="29" font-style="italic">cache</text>
+
+    <!-- A small approval note next to the user, not another routing branch. -->
+    <path class="card" d="M88 558 Q168 554 251 558 Q276 558 277 581 L276 635 Q275 655 252 656 L88 654 Q66 654 67 633 L66 580 Q67 560 88 558 Z"/>
+    <text class="small" x="172" y="599">Confidence &lt; 0.80?</text>
+    <text x="172" y="637" font-size="25" font-style="italic">Ask you first.</text>
+
+    <text class="tiny" x="611" y="780">One Jev call per session. Risk guards can require a stronger model.</text>
+    <text class="tiny" x="790" y="839">Astra never builds. OpenAI uses your allowance; free models use their native endpoint. Jev is a separate service.</text>
+  </g>
+</svg>

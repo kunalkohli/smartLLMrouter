@@ -1,6 +1,6 @@
-# Four simpler flow-diagram options
+# Pencil flow-diagram options
 
-All four show the **same implemented policy**:
+All options show the **same implemented policy**:
 
 - Pick **smartrouter - openai** → **Plan: Astra**.
 - First Build instruction → **one Jev call** → free model **or** OpenAI **Terra/Sol**.
@@ -9,9 +9,19 @@ All four show the **same implemented policy**:
 
 The name identifies the OpenAI planner; GLM/free Build alternatives remain enabled. The future **smartrouter - anthropic** entry (Fable planning, Jev-selected Claude build model) is not part of the current implementation.
 
+## E · User-first pencil sketch — latest reference-based revision
+
+A hand-drawn user, softly sketched rounded boxes, labeled arrows, and a cylinder-shaped session cache. This follows the latest pencil reference rather than the earlier card/architecture layouts.
+
+![E: User-first pencil sketch](05-user-sketch.png)
+
+[Editable SVG](05-user-sketch.svg)
+
+## Earlier options
+
 ![All four pencil-flow options](contact-sheet.png)
 
-## A · One straight journey — recommended for the README
+## A · One straight journey
 
 Minimal left-to-right overview, with the two Jev choices explained below it.
 
@@ -43,4 +53,4 @@ Separates planning from implementation, with the Build choice and reuse grouped 
 
 [Editable SVG](04-storyboard.svg)
 
-The main README diagram is unchanged pending selection. Regenerate SVGs with `python3 scripts/draw-flow-variants.py`; render each SVG in a browser to produce its PNG.
+The main README diagram is unchanged pending selection. Regenerate A–D and the review gallery with `python3 scripts/draw-flow-variants.py`; E is edited directly in its SVG. Render each SVG in a browser to produce its PNG.

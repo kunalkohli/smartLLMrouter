@@ -6,7 +6,7 @@ Smart Router turns your coding agent's model selector into a cost lever. Instead
 
 > **Live native flow:** select **smartrouter - openai** under **OpenAI** (`openai/smartrouter-auto`; the ID stays stable). **Plan uses Astra. On the first Build instruction, one Jev call chooses an eligible free model or OpenAI Terra/Sol. Astra is never used for Build, including fallback paths.** The picker switches to the actual chosen model and the session shows Jev's decision and confidence. OpenAI uses your existing OAuth allowance; free models use OpenCode's keyless native provider. Jev is a separate classifier service. The label identifies the planner family, not an OpenAI-only Build restriction: GLM/free alternatives remain enabled.
 
-**Diagram review:** [four simpler pencil-flow variants](docs/diagram-variants/README.md). The existing README illustration stays in place until a replacement is selected.
+**Diagram review:** [pencil-flow options, including the latest user-first sketch](docs/diagram-variants/README.md). The existing README illustration stays in place until a replacement is selected.
 
 ![Pencil-drawn Smart Router architecture: Astra planning, Jev classification, confidence gating, native free or Terra/Sol builds, caching, and measurement](docs/model-router-pencil.png)
 
