@@ -1,6 +1,6 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
-import { BUILD_MODELS, classifyBuild, composeDecision, questions } from "../plugin/smartrouter/jev.ts"
+import { BUILD_MODELS, classifyBuild, composeDecision, formatDecision, questions } from "../plugin/smartrouter/jev.ts"
 import type { Candidate } from "../plugin/smartrouter/jev.ts"
 
 const candidates: Candidate[] = Object.entries(BUILD_MODELS).map(([key, ref]) => ({ key, ref, family: ref.startsWith("openai/") ? "openai" : "free" }))
@@ -57,4 +57,28 @@ test("HTTP errors never echo upstream bodies or credentials", async () => {
   await assert.rejects(() => classifyBuild("test plan", "test-secret", candidates, fakeFetch), (error: Error) => {
     assert.match(error.message, /HTTP 401/); assert.doesNotMatch(error.message, /secret-test-data|test-secret/); return true
   })
+})
+
+test("free route labels the OpenAI answer conditional and keeps the gate unchanged", () => {
+  const d = { ...composeDecision(answers(), candidates), jevModel: "jev-test", latencyMs: 1 }
+  const text = formatDecision(d)
+  assert.match(text, /OpenAI model \(Terra vs Sol\): Terra · confidence 0.91 — conditional, not used/)
+  assert.match(text, /Free model: GLM · confidence 0.95\n/)
+  assert.match(text, /Gate confidence: 0.95 · threshold 0.80 · automatic/)
+})
+
+test("risk overrides stay separate from the raw Jev choices", () => {
+  const a = answers(); a.touches_security.noul = 0.95
+  const d = { ...composeDecision(a, candidates), jevModel: "jev-test", latencyMs: 1 }
+  const text = formatDecision(d)
+  assert.match(text, /Family \(Free vs OpenAI\): Free · confidence 0.98/)
+  assert.match(text, /OpenAI model \(Terra vs Sol\): Terra · confidence 0.91/)
+  assert.match(text, /Risk override: touches_security → openai\/gpt-6.1-sol/)
+  assert.match(text, /🧠 Jev → openai\/gpt-6.1-sol/)
+})
+
+test("an unavailable conditional branch is omitted rather than fabricated", () => {
+  const onlyFree = candidates.filter((c) => c.family === "free")
+  const d = { ...composeDecision(answers(), onlyFree), jevModel: "jev-test", latencyMs: 1 }
+  assert.doesNotMatch(formatDecision(d), /OpenAI model \(Terra vs Sol\)/)
 })

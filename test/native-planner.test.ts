@@ -20,7 +20,7 @@ function fixture() {
   const session = { id: "test-session", agent: "plan", model: { providerID: "openai", id: NATIVE_MODEL, variant: "high" } as ModelRef }
   const source = models[0]
   const storage = new Map<string, any>()
-  const logs: any[] = [], announcements: any[] = [], switches: ModelRef[] = []
+  const logs: any[] = [], announcements: any[] = [], switches: ModelRef[] = [], permissionInputs: any[] = []
   const hooks: Record<string, (event: any) => any> = {}, commands: Record<string, any> = {}
   let connection: any = { type: "credential", method: "oauth" }
   let answers = answer(), calls = 0, approvals = 0, denied = false, classifyError: Error | undefined
@@ -46,6 +46,7 @@ function fixture() {
       async hook(name, callback) { hooks[`permission.${name}`] = callback },
       async assert(input) {
         approvals++
+        permissionInputs.push(input)
         const event = { action: input.action, effect: "allow" }
         hooks["permission.evaluate"](event)
         assert.equal(event.effect, "ask")
@@ -65,7 +66,7 @@ function fixture() {
     async log(record) { logs.push(record) },
   }
   return {
-    ctx, options, models, source, session, storage, logs, announcements, switches, commands,
+    ctx, options, models, source, session, storage, logs, announcements, switches, commands, permissionInputs,
     answers(value: typeof answers) { answers = value }, connection(value: any) { connection = value },
     deny() { denied = true }, fail(error: Error) { classifyError = error }, calls: () => calls, approvals: () => approvals,
     async setup(overrides: NativeOptions = {}) { await setupNativePlanner(ctx, undefined, { ...options, ...overrides }) },
@@ -77,7 +78,7 @@ function fixture() {
 
 test("Plan alias inherits Astra driver/capabilities/variants without mutating Astra", async () => {
   const f = fixture(); await f.setup()
-  assert.deepEqual(f.models.find((m) => m.id === NATIVE_MODEL), { ...f.source, id: NATIVE_MODEL, name: "Smart Router (auto)", cost: [] })
+  assert.deepEqual(f.models.find((m) => m.id === NATIVE_MODEL), { ...f.source, id: NATIVE_MODEL, name: "smartrouter - openai", cost: [] })
   assert.deepEqual(f.source.cost, [{ input: 10, output: 50 }])
   await f.prompt("plan"); await f.dispatch()
   assert.equal(f.calls(), 0)
@@ -198,6 +199,24 @@ test("missing Jev key is an actionable error and sends no model request", async 
 test("status command exposes the actual cached decision", async () => {
   const f = fixture(); await f.setup(); await f.prompt(); await f.command("smartrouter-status")
   assert.match(f.announcements.at(-1).text, /gpt-6.1-terra/)
+})
+
+test("notice, approval prompt, and cached status show both independent decisions", async () => {
+  const f = fixture()
+  const raw = answer("openai", "terra")
+  raw.family.confidence = 0.56; raw.openai_model.confidence = 0.04; raw.free_model = { choice: "deepseek", confidence: 0.73 }
+  f.answers(raw); await f.setup(); await f.prompt()
+  const notice = f.announcements[0].text
+  assert.match(notice, /Family \(Free vs OpenAI\): OpenAI · confidence 0.56/)
+  assert.match(notice, /OpenAI model \(Terra vs Sol\): Terra · confidence 0.04/)
+  assert.match(notice, /Free model: DeepSeek · confidence 0.73 — conditional, not used/)
+  assert.match(notice, /Gate confidence: 0.04.*approval confirmed/)
+  assert.deepEqual(f.permissionInputs[0].metadata.familyDecision, raw.family)
+  assert.deepEqual(f.permissionInputs[0].metadata.openaiDecision, raw.openai_model)
+  assert.match(f.permissionInputs[0].metadata.summary, /approval required/)
+  await f.command("smartrouter-status")
+  assert.equal(f.announcements.at(-1).text, notice)
+  assert.equal(f.calls(), 1)
 })
 
 test("ordinary selections are left alone; explicit manual model changes are respected", async () => {

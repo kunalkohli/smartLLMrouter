@@ -1,8 +1,9 @@
-import { BUILD_MODELS, classifyBuild } from "./jev.ts"
+import { BUILD_MODELS, classifyBuild, formatDecision } from "./jev.ts"
 import type { Candidate, Decision } from "./jev.ts"
 
 export const NATIVE_PROVIDER = "openai"
 export const NATIVE_MODEL = "smartrouter-auto"
+export const NATIVE_NAME = "smartrouter - openai"
 export type ModelRef = { providerID: string; id: string; variant?: string }
 export type ModelInfo = ModelRef & {
   enabled?: boolean; modelID?: string
@@ -118,7 +119,7 @@ export async function setupNativePlanner(ctx: NativePlannerContext, planner = "o
     const source = editor.get(NATIVE_PROVIDER, plannerRef.id)
     if (!source || source.enabled === false) return
     editor.update(NATIVE_PROVIDER, NATIVE_MODEL, (draft) => {
-      Object.assign(draft, source, { id: NATIVE_MODEL, modelID: source.modelID ?? plannerRef.id, name: "Smart Router (auto)", cost: [] })
+      Object.assign(draft, source, { id: NATIVE_MODEL, modelID: source.modelID ?? plannerRef.id, name: NATIVE_NAME, cost: [] })
     })
   })
   await ctx.permission.hook("evaluate", (event) => {
@@ -162,7 +163,13 @@ export async function setupNativePlanner(ctx: NativePlannerContext, planner = "o
     const decision = managed.decision
     if (!candidates.some((candidate) => candidate.ref === decision.model) || /astra/i.test(decision.model)) throw new Error("Smart Router: the chosen build model is no longer eligible. Build stopped; no Astra or paid-API fallback.")
     if (decision.confidence < threshold && !managed.approved) {
-      await ctx.permission.assert({ sessionID: event.sessionID, agent: session.agent ?? "build", action: "smartrouter.route", resources: [decision.model], save: [], metadata: { confidence: decision.confidence, reason: decision.reason } })
+      await ctx.permission.assert({ sessionID: event.sessionID, agent: session.agent ?? "build", action: "smartrouter.route", resources: [decision.model], save: [], metadata: {
+        confidence: decision.confidence, reason: decision.reason,
+        familyDecision: decision.answers.family,
+        ...(decision.answers.openai_model ? { openaiDecision: decision.answers.openai_model } : {}),
+        ...(decision.answers.free_model ? { freeDecision: decision.answers.free_model } : {}),
+        summary: formatDecision(decision, threshold),
+      } })
       managed.approved = true
       await save(event.sessionID, managed)
       await log(event.sessionID, "jev.confirmed", { model: decision.model, confidence: decision.confidence })
@@ -176,7 +183,7 @@ export async function setupNativePlanner(ctx: NativePlannerContext, planner = "o
     managed.lastModel = target
     await save(event.sessionID, managed)
     if (!managed.announced) {
-      await ctx.session.synthetic({ sessionID: event.sessionID, resume: false, description: "Smart Router · Jev decision", text: `🧠 Jev → ${decision.model} · confidence ${decision.confidence.toFixed(2)}\n${decision.reason}\nNative provider connection; cached for this session. Astra is Plan-only.` })
+      await ctx.session.synthetic({ sessionID: event.sessionID, resume: false, description: "Smart Router · Jev decision", text: formatDecision(decision, threshold, managed.approved) })
       managed.announced = true
       await save(event.sessionID, managed)
     }
@@ -217,7 +224,7 @@ export async function setupNativePlanner(ctx: NativePlannerContext, planner = "o
   await ctx.command?.transform((editor) => {
     editor.add({ name: "smartrouter-status", description: "Show the cached Jev decision and actual build model", async execute({ sessionID }) {
       const managed = await load(sessionID)
-      const text = managed?.decision ? JSON.stringify(managed.decision, null, 2) : managed?.failure ?? "No Jev decision yet. Jev runs on the first Build instruction after selecting Smart Router."
+      const text = managed?.decision ? formatDecision(managed.decision, threshold, managed.approved) : managed?.failure ?? "No Jev decision yet. Jev runs on the first Build instruction after selecting Smart Router."
       await ctx.session.synthetic({ sessionID, text, description: "Smart Router status", resume: false })
     } })
     editor.add({ name: "smartrouter-reset", description: "Clear this session's routing decision; classify again on the next Build prompt", async execute({ sessionID }) {

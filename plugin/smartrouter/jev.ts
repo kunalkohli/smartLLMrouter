@@ -27,6 +27,25 @@ export type Decision = {
   latencyMs: number
 }
 
+/** Keep the classifier's two-stage choices distinct from the final route/guard. */
+export function formatDecision(decision: Decision, threshold = 0.8, approved = false): string {
+  const names: Record<string, string> = { free: "Free", openai: "OpenAI", terra: "Terra", sol: "Sol", glm: "GLM", longcat: "LongCat", deepseek: "DeepSeek" }
+  const name = (value: string) => names[value] ?? value
+  const choice = (value: Choice) => `${name(value.choice)} · confidence ${value.confidence.toFixed(2)}`
+  const lines = [
+    `🧠 Jev → ${decision.model} · confidence ${decision.confidence.toFixed(2)}`,
+    `Family (Free vs OpenAI): ${choice(decision.answers.family)}`,
+  ]
+  if (decision.answers.openai_model) lines.push(`OpenAI model (Terra vs Sol): ${choice(decision.answers.openai_model)}${decision.family === "openai" ? "" : " — conditional, not used"}`)
+  if (decision.answers.free_model) lines.push(`Free model: ${choice(decision.answers.free_model)}${decision.family === "free" ? "" : " — conditional, not used"}`)
+  lines.push(
+    `Gate confidence: ${decision.confidence.toFixed(2)} · threshold ${threshold.toFixed(2)} · ${decision.confidence >= threshold ? "automatic" : approved ? "approval confirmed" : "approval required"}`,
+    ...(decision.guardedBy.length ? [`Risk override: ${decision.guardedBy.join(", ")} → ${decision.model}`] : []),
+    "Native provider connection; cached for this session. Astra is Plan-only.",
+  )
+  return lines.join("\n")
+}
+
 export function questions(candidates: Candidate[]) {
   const free = candidates.filter((c) => c.family === "free")
   const openai = candidates.filter((c) => c.family === "openai")
