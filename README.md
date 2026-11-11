@@ -4,7 +4,9 @@
 
 Smart Router turns your coding agent's model selector into a cost lever. Instead of choosing between your expensive planner and a cheap-but-shaky executor, you select a single model — **Smart Router** — and it quietly builds with the cheapest model that is *"good enough"* for the specific task in front of it, on a per-session basis.
 
-> **Live native flow:** select **Smart Router (auto)** under **OpenAI** (`openai/smartrouter-auto`). **Plan uses Astra. On the first Build instruction, one Jev call chooses an eligible free model or OpenAI Terra/Sol. Astra is never used for Build, including fallback paths.** The picker switches to the actual chosen model and the session shows Jev's decision and confidence. OpenAI uses your existing OAuth allowance; free models use OpenCode's keyless native provider. Jev is a separate classifier service.
+> **Live native flow:** select **smartrouter - openai** under **OpenAI** (`openai/smartrouter-auto`; the ID stays stable). **Plan uses Astra. On the first Build instruction, one Jev call chooses an eligible free model or OpenAI Terra/Sol. Astra is never used for Build, including fallback paths.** The picker switches to the actual chosen model and the session shows Jev's decision and confidence. OpenAI uses your existing OAuth allowance; free models use OpenCode's keyless native provider. Jev is a separate classifier service. The label identifies the planner family, not an OpenAI-only Build restriction: GLM/free alternatives remain enabled.
+
+**Diagram review:** [four simpler pencil-flow variants](docs/diagram-variants/README.md). The existing README illustration stays in place until a replacement is selected.
 
 ![Pencil-drawn Smart Router architecture: Astra planning, Jev classification, confidence gating, native free or Terra/Sol builds, caching, and measurement](docs/model-router-pencil.png)
 
@@ -71,10 +73,17 @@ Three sample plans, one Jev call each, tier composed in code:
 
 Rollout order (not PR numbers):
 
-1. **Implemented — OpenCode setting:** native **Smart Router (auto)** alias → Astra for Plan → existing OpenAI OAuth allowance.
+1. **Implemented — OpenCode setting:** native **smartrouter - openai** alias → Astra for Plan → existing OpenAI OAuth allowance.
 2. **Implemented — Jev flow:** classify the finished plan once, choose a family/model, apply risk guards, and gate on confidence.
 3. **Implemented — post-Jev routing:** switch to the eligible native model before Build dispatch; expose the real model and cache the decision. No Astra Build or automatic paid-API fallback.
 4. **Measure and harden:** telemetry, allowance/cost comparisons, failure escalation, additional provider families, and router-library extraction.
+
+### Provider-family entries
+
+| Picker entry | Default Plan model | Build routing | Status |
+|---|---|---|---|
+| **smartrouter - openai** | Astra | Jev chooses free alternatives or OpenAI Terra/Sol | Implemented; existing ID `openai/smartrouter-auto` is unchanged |
+| **smartrouter - anthropic** | Fable | Jev selects among eligible Claude-family build models | Future design only; not registered or implemented |
 
 ## Install and test (native subscription mode)
 
@@ -84,7 +93,7 @@ Rollout order (not PR numbers):
    …or reference the path in `opencode.jsonc`: `"plugins": ["<repo-path>/plugin/smartrouter"]`
 3. **Connect OpenAI** with `/connect` → **OpenAI** → **Sign in with ChatGPT**, if not already connected. Native mode requires OAuth and refuses API-key connections. Usage still counts against your subscription limits.
 4. **Configure:** copy `config/smartrouter.example.json` to `.opencode/smartrouter.json`. Keep `"mode": "native"` and `"planner": "openai/gpt-6-astra"`. For Jev, set `TYPESAFE_API_KEY` in the server environment, or add `"typesafeKeyFile": "path/to/private/jev.key"` (resolved from the workspace directory). Keep that file private, preferably outside the repo, and never commit its contents. No OpenAI or Go API key is needed. Legacy `tiers`/`keys` settings are ignored in native mode.
-5. In `/models`, select **Smart Router (auto)** under **OpenAI** (`openai/smartrouter-auto`). If upgrading from the proxy prototype, cancel its retries and reselect this new entry; old sessions selecting `smartrouter/auto` do not migrate automatically. Config/plugin edits reload automatically; use `/reload` if needed, not a service restart.
+5. In `/models`, select **smartrouter - openai** under **OpenAI** (`openai/smartrouter-auto`). If upgrading from the proxy prototype, cancel its retries and reselect this new entry; old sessions selecting `smartrouter/auto` do not migrate automatically. Renaming this native entry does not invalidate existing native sessions. Config/plugin edits reload automatically; use `/reload` if needed, not a service restart.
 6. In **Plan**, send: **“Plan a trivial README typo correction. Do not use tools or change files.”** This uses Astra; the picker displays the Smart Router alias.
 7. Switch to **Build**, then send: **“Use that plan for routing, but make no changes and use no tools. Reply exactly BUILD_OK.”** Jev runs on this first instruction, not on the agent toggle alone. Expect a native approval prompt if confidence is low, a **Jev → provider/model · confidence** notice, and the actual chosen model in the picker. Build never uses Astra.
 8. Send a second no-tools instruction. Confirm the same model is used and no new `jev.decision` entry is added.
@@ -94,7 +103,7 @@ The `prompt` admission hook performs native cross-provider switching; `model.req
 ### Decision logs and controls
 
 - Local log: **`.opencode/smartrouter/decisions.jsonl`** in the workspace. `jev.decision` records the chosen family/model, confidence, sanitized answers, risk guards, and latency. `native.dispatch` records which model was actually sent a request.
-- A single Jev notice is added to the session on successful routing. `/smartrouter-status` queues the cached decision as a status note.
+- A single Jev notice shows **family choice + confidence**, **Terra/Sol choice + confidence**, and **free-model choice + confidence** (unused branches are labeled conditional), followed by the actual build model and approval-gate confidence. Risk overrides are shown separately. The low-confidence permission prompt includes the same breakdown. `/smartrouter-status` queues this readable breakdown for a cached decision without another Jev call.
 - `/smartrouter-reset` clears this session's decision and reselects Smart Router. Send the next Build instruction to classify again. Failures are cached too, so retries do not silently spend on repeated classifier calls.
 - Logs contain no prompts, plans, API keys, or OAuth tokens. Classifier decisions are also stored in plugin-local durable storage; logs are gitignored.
 
