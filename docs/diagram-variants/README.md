@@ -9,7 +9,7 @@ All options show the **same implemented policy**:
 
 The name identifies the OpenAI planner; GLM/free Build alternatives remain enabled. The future **smartrouter - anthropic** entry (Fable planning, Jev-selected Claude build model) is not part of the current implementation.
 
-## E · User-first pencil sketch — latest reference-based revision
+## E · User-first pencil sketch — selected for the README
 
 A hand-drawn user, softly sketched rounded boxes, labeled arrows, and a cylinder-shaped session cache. This follows the latest pencil reference rather than the earlier card/architecture layouts.
 
@@ -53,4 +53,4 @@ Separates planning from implementation, with the Build choice and reuse grouped 
 
 [Editable SVG](04-storyboard.svg)
 
-The main README diagram is unchanged pending selection. Regenerate A–D and the review gallery with `python3 scripts/draw-flow-variants.py`; E is edited directly in its SVG. Render each SVG in a browser to produce its PNG.
+The main README uses E. Earlier options are retained for reference. Regenerate A–D and the review gallery with `python3 scripts/draw-flow-variants.py`; E is edited directly in its SVG. Render each SVG in a browser to produce its PNG.

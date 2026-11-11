@@ -6,12 +6,9 @@ Smart Router turns your coding agent's model selector into a cost lever. Instead
 
 > **Live native flow:** select **smartrouter - openai** under **OpenAI** (`openai/smartrouter-auto`; the ID stays stable). **Plan uses Astra. On the first Build instruction, one Jev call chooses an eligible free model or OpenAI Terra/Sol. Astra is never used for Build, including fallback paths.** The picker switches to the actual chosen model and the session shows Jev's decision and confidence. OpenAI uses your existing OAuth allowance; free models use OpenCode's keyless native provider. Jev is a separate classifier service. The label identifies the planner family, not an OpenAI-only Build restriction: GLM/free alternatives remain enabled.
 
-**Diagram review:** [pencil-flow options, including the latest user-first sketch](docs/diagram-variants/README.md). The existing README illustration stays in place until a replacement is selected.
+![Pencil-drawn workflow: a user selects smartrouter - openai, Astra plans, Jev chooses a free model or Terra/Sol for Build, and the session caches the choice](docs/diagram-variants/05-user-sketch.png)
 
-![Pencil-drawn Smart Router architecture: Astra planning, Jev classification, confidence gating, native free or Terra/Sol builds, caching, and measurement](docs/model-router-pencil.png)
-
-
-> **Editable pencil drawing:** [`docs/model-router-pencil.svg`](docs/model-router-pencil.svg). Solid lines show the implemented routing; dashed lines show the planned savings report. The [original interactive prototype diagram](docs/model-router.html) is retained as historical design context.
+> **Editable pencil drawing:** [`05-user-sketch.svg`](docs/diagram-variants/05-user-sketch.svg). The dashed approval branch applies when confidence is below 0.80. [Earlier diagram options](docs/diagram-variants/README.md) and the [original interactive prototype](docs/model-router.html) are retained as design context.
 
 ## Why
 
