@@ -112,6 +112,16 @@ test("subsequent build prompts and tool continuations reuse one durable decision
   assert.equal(f.calls(), 1); assert.equal(f.announcements.length, 1)
 })
 
+test("a rubric update does not silently reclassify an existing session", async () => {
+  const f = fixture(); await f.setup(); await f.prompt()
+  const before = structuredClone(f.session.model)
+  await f.setup({ classify: async () => { throw new Error("A cached session must not invoke the new rubric") } })
+  await f.prompt(); await f.dispatch()
+  assert.deepEqual(f.session.model, before)
+  assert.equal(f.calls(), 1)
+  assert.equal(f.announcements.length, 1)
+})
+
 test("concurrent prompt admissions classify once", async () => {
   const f = fixture(); await f.setup(); await Promise.all([f.prompt(), f.prompt()]); assert.equal(f.calls(), 1)
 })

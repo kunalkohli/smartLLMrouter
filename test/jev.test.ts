@@ -1,6 +1,6 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
-import { BUILD_MODELS, classifyBuild, composeDecision, formatDecision, questions } from "../plugin/smartrouter/jev.ts"
+import { BUILD_MODELS, classifyBuild, composeDecision, formatDecision, questions, ROUTING_RUBRIC } from "../plugin/smartrouter/jev.ts"
 import type { Candidate } from "../plugin/smartrouter/jev.ts"
 
 const candidates: Candidate[] = Object.entries(BUILD_MODELS).map(([key, ref]) => ({ key, ref, family: ref.startsWith("openai/") ? "openai" : "free" }))
@@ -50,6 +50,7 @@ test("classifier makes exactly one bounded request and parses the structured res
   const d = await classifyBuild("test plan", "test-secret", candidates, fakeFetch)
   assert.equal(calls, 1); assert.equal(d.jevModel, "jev-real"); assert.equal(d.model, BUILD_MODELS.glm)
   assert.ok(!JSON.stringify(d).includes("test-secret"))
+  assert.equal(d.rubricVersion, ROUTING_RUBRIC)
 })
 
 test("HTTP errors never echo upstream bodies or credentials", async () => {
@@ -81,4 +82,29 @@ test("an unavailable conditional branch is omitted rather than fabricated", () =
   const onlyFree = candidates.filter((c) => c.family === "free")
   const d = { ...composeDecision(answers(), onlyFree), jevModel: "jev-test", latencyMs: 1 }
   assert.doesNotMatch(formatDecision(d), /OpenAI model \(Terra vs Sol\)/)
+})
+
+test("rubric treats routine multi-file public-data apps as eligible for the free family", () => {
+  const q = questions(candidates)
+  assert.match(q.family.instructions, /multiple files/)
+  assert.match(q.family.criteria.free!, /multi-file web prototypes/)
+  assert.match(q.family.criteria.free!, /server-side data proxy/)
+  assert.match(q.free_model!.criteria.glm, /dashboards/)
+  assert.match(q.family.criteria.openai!, /Do not select solely for file count/)
+})
+
+test("risk questions distinguish read-only public data/env usage from real security and infra changes", () => {
+  const q = questions(candidates)
+  assert.match(q.touches_security.instructions, /Read-only public market/)
+  assert.match(q.touches_security.instructions, /environment variable/)
+  assert.match(q.touches_security.instructions, /authentication\/authorization/)
+  assert.match(q.touches_security.instructions, /user payment\/order execution/)
+  assert.match(q.touches_infra.instructions, /production infrastructure/)
+  assert.match(q.touches_infra.instructions, /ordinary local app\/backend/)
+})
+
+test("decision notices distinguish the new rubric from cached unversioned decisions", () => {
+  const d = { ...composeDecision(answers(), candidates), jevModel: "jev-test", latencyMs: 1 }
+  assert.match(formatDecision(d), /Routing rubric: legacy \/ unversioned/)
+  assert.match(formatDecision({ ...d, rubricVersion: ROUTING_RUBRIC }), /Routing rubric: routine-feature-v2/)
 })

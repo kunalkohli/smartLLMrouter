@@ -45,6 +45,8 @@ Native mode allows these models only when enabled, tool-capable, and eligible. O
 
 Configure the allowlist with `nativeBuildModels`. The router rejects Astra build entries, non-Terra/Sol OpenAI entries, and non-free other-provider entries. Missing Jev credentials, invalid answers, or disappearing models stop execution rather than falling back to Astra or a paid API.
 
+**Routing rubric:** routine multi-file prototypes, standard charts/search, public data and an ordinary env-backed proxy can qualify for free execution. Actual security/financial execution or difficult architecture is judged separately. See the [versioned rubric and classifier-only comparison](docs/routing-rubric.md); those observations are not model-performance benchmarks.
+
 ### Live native verification
 
 | Smoke test | Jev result | Confidence | Classifier latency | Result |
@@ -102,6 +104,7 @@ The `prompt` admission hook performs native cross-provider switching; `model.req
 - Local log: **`.opencode/smartrouter/decisions.jsonl`** in the workspace. `jev.decision` records the chosen family/model, confidence, sanitized answers, risk guards, and latency. `native.dispatch` records which model was actually sent a request.
 - A single Jev notice shows **family choice + confidence**, **Terra/Sol choice + confidence**, and **free-model choice + confidence** (unused branches are labeled conditional), followed by the actual build model and approval-gate confidence. Risk overrides are shown separately. The low-confidence permission prompt includes the same breakdown. `/smartrouter-status` queues this readable breakdown for a cached decision without another Jev call.
 - `/smartrouter-reset` clears this session's decision and reselects Smart Router. Send the next Build instruction to classify again. Failures are cached too, so retries do not silently spend on repeated classifier calls.
+- Notices/status include the rubric version. Updating the rubric does not reroute existing sessions: use a fresh session or explicitly reset to try the new version.
 - Logs contain no prompts, plans, API keys, or OAuth tokens. Classifier decisions are also stored in plugin-local durable storage; logs are gitignored.
 
 ### Legacy API proxy (explicit opt-in; separately billed)
