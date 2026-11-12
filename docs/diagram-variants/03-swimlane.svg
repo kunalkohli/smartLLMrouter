@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="800" viewBox="0 0 1400 800" role="img" aria-label="C · Who does what">
+<defs>
+  <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="3" seed="9" result="noise"/><feColorMatrix in="noise" type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".03"/></feComponentTransfer><feBlend in="SourceGraphic" mode="multiply"/></filter>
+  <filter id="pencil" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="2" seed="17" result="grain"/><feDisplacementMap in="SourceGraphic" in2="grain" scale=".8" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto"><path d="M2 2 L10 6 L2 10" fill="none" stroke="#535b51" stroke-width="1.6" stroke-linejoin="round"/></marker>
+  <style>
+    text { font-family:'Chalkboard SE','Comic Sans MS',cursive; fill:#394239; text-anchor:middle; }
+    .route { fill:none; stroke:#535b51; stroke-width:2.2; stroke-linejoin:round; stroke-linecap:round; marker-end:url(#arrow); }
+    .note { fill:none; stroke:#7b8e95; stroke-width:1.8; stroke-dasharray:6 5; stroke-linejoin:round; }
+    .echo { fill:none; stroke:#868b7c; stroke-width:.7; opacity:.4; }
+  </style>
+</defs>
+<rect width="1400" height="800" fill="#faf8f0" filter="url(#paper)"/>
+<g filter="url(#pencil)">
+<text x="45" y="56" font-size="31" style="text-anchor:start;fill:#394239">C · Who does what</text>
+<text x="45" y="96" font-size="21" style="text-anchor:start;fill:#6a7468">Each row is one moment in the session. Follow the arrows across.</text>
+<path d="M30 130 Q240.0 128 450 131 L451 705 Q240.0 707 29 704 Z" fill="#f2f1e7" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M28 128 L452 129 L453 707 L28 707" class="echo"/>
+<text x="240.0" y="161" font-size="19" style="text-anchor:middle;fill:#6b7667">YOU</text>
+<path d="M480 130 Q690.0 128 900 131 L901 705 Q690.0 707 479 704 Z" fill="#eef2e9" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M478 128 L902 129 L903 707 L478 707" class="echo"/>
+<text x="690.0" y="161" font-size="19" style="text-anchor:middle;fill:#6b7667">SMART ROUTER</text>
+<path d="M930 130 Q1150.0 128 1370 131 L1371 705 Q1150.0 707 929 704 Z" fill="#eaf0f0" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M928 128 L1372 129 L1373 707 L928 707" class="echo"/>
+<text x="1150.0" y="161" font-size="19" style="text-anchor:middle;fill:#6b7667">NATIVE MODELS</text>
+<path d="M415 235 L515 235" class="route"/>
+<path d="M865 235 L965 235" class="route"/>
+<path d="M415 425 L515 425" class="route"/>
+<path d="M865 425 L965 425" class="route"/>
+<path d="M415 615 L515 615" class="route"/>
+<path d="M865 615 L965 615" class="route"/>
+<path d="M1150 290 L1150 327 L690 327 L690 370" class="route"/>
+<text x="942" y="316" font-size="17" style="text-anchor:middle;fill:#6e7b72">finished plan</text>
+<path d="M65 180 Q240.0 178 415 181 L416 290 Q240.0 292 64 289 Z" fill="#fbfaf4" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M63 178 L417 179 L418 292 L63 292" class="echo"/>
+<text x="240.0" y="207" font-size="16" style="text-anchor:middle;fill:#758071">PLAN</text>
+<text x="240.0" y="244" font-size="22" style="text-anchor:middle;fill:#394239">Select smartrouter - openai</text>
+<text x="240.0" y="274" font-size="18" style="text-anchor:middle;fill:#667260">Send your planning request</text>
+<path d="M515 180 Q690.0 178 865 181 L866 290 Q690.0 292 514 289 Z" fill="#f5f5ed" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M513 178 L867 179 L868 292 L513 292" class="echo"/>
+<text x="690.0" y="207" font-size="16" style="text-anchor:middle;fill:#758071">PLAN ROUTE</text>
+<text x="690.0" y="244" font-size="25" style="text-anchor:middle;fill:#394239">Native OpenAI alias</text>
+<text x="690.0" y="274" font-size="18" style="text-anchor:middle;fill:#667260">Use the existing sign-in</text>
+<path d="M965 180 Q1150.0 178 1335 181 L1336 290 Q1150.0 292 964 289 Z" fill="#f0eedf" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M963 178 L1337 179 L1338 292 L963 292" class="echo"/>
+<text x="1150.0" y="207" font-size="16" style="text-anchor:middle;fill:#758071">PLAN MODEL</text>
+<text x="1150.0" y="244" font-size="26" style="text-anchor:middle;fill:#394239">Astra</text>
+<text x="1150.0" y="274" font-size="18" style="text-anchor:middle;fill:#667260">Produces the finished plan</text>
+<path d="M65 370 Q240.0 368 415 371 L416 480 Q240.0 482 64 479 Z" fill="#fbfaf4" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M63 368 L417 369 L418 482 L63 482" class="echo"/>
+<text x="240.0" y="397" font-size="16" style="text-anchor:middle;fill:#758071">BUILD</text>
+<text x="240.0" y="434" font-size="23" style="text-anchor:middle;fill:#394239">Switch + send instruction</text>
+<text x="240.0" y="464" font-size="18" style="text-anchor:middle;fill:#667260">The toggle alone does not call Jev</text>
+<path d="M515 370 Q690.0 368 865 371 L866 480 Q690.0 482 514 479 Z" fill="#eaf1f1" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M513 368 L867 369 L868 482 L513 482" class="echo"/>
+<text x="690.0" y="397" font-size="16" style="text-anchor:middle;fill:#758071">JEV · ONCE</text>
+<text x="690.0" y="434" font-size="24" style="text-anchor:middle;fill:#394239">Choose sufficient model</text>
+<text x="690.0" y="464" font-size="18" style="text-anchor:middle;fill:#667260">Below 0.80 → ask approval</text>
+<path d="M965 370 Q1150.0 368 1335 371 L1336 480 Q1150.0 482 964 479 Z" fill="#eef2e8" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M963 368 L1337 369 L1338 482 L963 482" class="echo"/>
+<text x="1150.0" y="397" font-size="16" style="text-anchor:middle;fill:#758071">BUILD MODEL</text>
+<text x="1150.0" y="434" font-size="25" style="text-anchor:middle;fill:#394239">Free OR Terra / Sol</text>
+<text x="1150.0" y="464" font-size="18" style="text-anchor:middle;fill:#667260">Never Astra; picker updates</text>
+<path d="M65 560 Q240.0 558 415 561 L416 670 Q240.0 672 64 669 Z" fill="#fbfaf4" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M63 558 L417 559 L418 672 L63 672" class="echo"/>
+<text x="240.0" y="587" font-size="16" style="text-anchor:middle;fill:#758071">CONTINUE</text>
+<text x="240.0" y="624" font-size="24" style="text-anchor:middle;fill:#394239">Next Build instruction</text>
+<text x="240.0" y="654" font-size="18" style="text-anchor:middle;fill:#667260">Normal edits, tools, and follow-ups</text>
+<path d="M515 560 Q690.0 558 865 561 L866 670 Q690.0 672 514 669 Z" fill="#fbfaf4" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M513 558 L867 559 L868 672 L513 672" class="echo"/>
+<text x="690.0" y="587" font-size="16" style="text-anchor:middle;fill:#758071">CACHE</text>
+<text x="690.0" y="624" font-size="24" style="text-anchor:middle;fill:#394239">Reuse the chosen route</text>
+<text x="690.0" y="654" font-size="18" style="text-anchor:middle;fill:#667260">No additional Jev classification</text>
+<path d="M965 560 Q1150.0 558 1335 561 L1336 670 Q1150.0 672 964 669 Z" fill="#eef2e8" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M963 558 L1337 559 L1338 672 L963 672" class="echo"/>
+<text x="1150.0" y="587" font-size="16" style="text-anchor:middle;fill:#758071">SAME BUILD MODEL</text>
+<text x="1150.0" y="624" font-size="26" style="text-anchor:middle;fill:#394239">Keep building</text>
+<text x="1150.0" y="654" font-size="18" style="text-anchor:middle;fill:#667260">Its native provider handles requests</text>
+<path d="M45 730 Q690 727 1355 730" class="echo"/>
+<text x="700" y="757" font-size="18" style="text-anchor:middle;fill:#394239">Astra: Plan only  ·  Free models if sufficient  ·  Terra/Sol for more judgment  ·  Cache the chosen route</text>
+<text x="700" y="784" font-size="16" style="text-anchor:middle;fill:#7a8174">Existing OpenAI sign-in or keyless free models. Jev is a separate classifier service.</text>
+</g>
+</svg>

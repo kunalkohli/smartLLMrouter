@@ -1,7 +1,11 @@
 /**
- * Smart Router — the OpenCode plugin behind `smartrouter/auto`.
+ * Smart Router — native mode defaults to `openai/smartrouter-auto`, an Astra
+ * alias using OpenCode's existing OAuth connection for Plan. On the first Build
+ * prompt, Jev selects an eligible native model and switches the session to it.
+ * Astra is Plan-only; OpenAI builds are Terra/Sol, or use keyless free models.
  *
- * You pick ONE model in OpenCode's picker: `Smart Router (auto)`. This plugin:
+ * Explicit `mode: "api-proxy"` retains the earlier API-key-only prototype below
+ * (`smartrouter/auto`). It is NOT subscription-backed. That prototype:
  *   1. registers a fake provider "smartrouter" with a single model "auto",
  *   2. spawns an in-process HTTP proxy on 127.0.0.1 that the provider points at,
  *   3. stamps every proxied request with the session / agent / kind, and routes:
@@ -22,12 +26,14 @@ import fs from "node:fs"
 import path from "node:path"
 import { Readable } from "node:stream"
 import { Model, Plugin, Provider } from "@opencode/plugin"
+import { setupNativePlanner } from "./native-planner.ts"
 
 /* ------------------------------------------------------------------ config */
 
 type Ref = string // "<endpoint>/<model>" — endpoint: "openai" | "go"
 
 const DEFAULTS = {
+  mode: "native",
   planner: "openai/gpt-6-astra",
   fallbackPlanner: "go/gpt-6-luna",
   tiers: { flash: "go/glm-5.3-flash", mid: "go/gpt-6-luna", top: "openai/gpt-6-astra" },
@@ -178,6 +184,25 @@ export default Plugin.define({
   const log = (...a: unknown[]) => console.log("[smartrouter]", ...a)
   const directory: string = ctx?.location?.directory ?? ctx?.directory ?? process.cwd()
   const cfg = loadConfig(directory)
+  // Default to OpenCode's native subscription flow, before resolving any API
+  // keys or starting the legacy proxy. API billing requires explicit opt-in.
+  if (cfg.mode === "native") return setupNativePlanner(ctx, cfg.planner, {
+    autoSwitchAt: cfg.autoSwitchAt,
+    buildModels: cfg.nativeBuildModels,
+    getTypesafeKey: () => {
+      const key = resolve(cfg.typesafeKey)
+      if (key) return key
+      if (!cfg.typesafeKeyFile) return ""
+      try { return fs.readFileSync(path.resolve(directory, cfg.typesafeKeyFile), "utf8").trim() }
+      catch { throw new Error("Smart Router: configured Typesafe key file could not be read. Build stopped; no Astra fallback.") }
+    },
+    log: async (record) => {
+      const folder = path.join(directory, ".opencode", "smartrouter")
+      await fs.promises.mkdir(folder, { recursive: true })
+      await fs.promises.appendFile(path.join(folder, "decisions.jsonl"), JSON.stringify(record) + "\n", { mode: 0o600 })
+    },
+  })
+  if (cfg.mode !== "api-proxy") throw new Error(`Smart Router: unsupported mode "${cfg.mode}"`)
   const keys = {
     go: resolve(cfg.keys.go),
     openai: resolve(cfg.keys.openai),
@@ -304,6 +329,11 @@ export default Plugin.define({
 
       const { ref, phase } = await routeFor(sid, kind, agent, body)
       const { endpoint, model } = parseRef(ref)
+      // Even the opt-in legacy proxy must not execute Astra outside Plan.
+      if (agent !== "plan" && /astra/i.test(model)) {
+        res.writeHead(409, { "content-type": "application/json" })
+        return res.end(JSON.stringify({ error: { message: "Smart Router: Astra is Plan-only. Build stopped; configure a non-Astra build model.", type: "smartrouter_policy" } }))
+      }
       const base = ENDPOINTS[endpoint]
       const key = keys[endpoint as keyof typeof keys]
 

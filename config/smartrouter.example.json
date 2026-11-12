@@ -1,6 +1,14 @@
 {
-  "//": "Smart Router configuration — copy to .opencode/smartrouter.json in your workspace. Values may be 'env:VARNAME' (read from the OpenCode server environment) or a literal. Never put a raw key in this file.",
+  "//": "Native: Astra for Plan; one Jev decision picks an eligible free model or OpenAI Terra/Sol for Build. No Astra in Build or paid-API fallback. Set TYPESAFE_API_KEY for Jev, or configure typesafeKeyFile to a private local file (never commit that file). Legacy tier/key settings apply only to explicit api-proxy mode.",
+  "mode": "native",
   "planner": "openai/gpt-6-astra",
+  "nativeBuildModels": {
+    "glm": "opencode/glm-5.3-flash-free",
+    "longcat": "opencode/longcat-2.5-free",
+    "deepseek": "opencode/deepseek-v4.1-flash-free",
+    "terra": "openai/gpt-6.1-terra",
+    "sol": "openai/gpt-6.1-sol"
+  },
   "fallbackPlanner": "go/gpt-6-luna",
   "tiers": {
     "flash": "go/glm-5.3-flash",

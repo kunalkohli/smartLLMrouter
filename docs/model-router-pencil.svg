@@ -1,0 +1,254 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1080" viewBox="0 0 1700 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Smart Router — pencil architecture</title>
+  <desc id="desc">An icon-based pencil architecture: workspace, Smart Router inside OpenCode, and connected model workflow. Solid paths show Astra planning, Jev family/model classification, confidence approval, native free or Terra/Sol builds, and session caching. Astra is never used for Build. Dashed paths show the future savings report.</desc>
+  <defs>
+    <filter id="paper">
+      <feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="3" seed="9" result="grain"/>
+      <feColorMatrix in="grain" type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".045"/></feComponentTransfer>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+    <filter id="pencil" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency=".065" numOctaves="2" seed="12" result="grain"/>
+      <feDisplacementMap in="SourceGraphic" in2="grain" scale="1.15" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(32)">
+      <path d="M0 0 L0 7" stroke="#74766d" stroke-width=".8" opacity=".22"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M2 2 L10 6 L2 10" fill="none" stroke="#555950" stroke-width="1.7" stroke-linejoin="round"/>
+    </marker>
+    <marker id="next-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M2 2 L10 6 L2 10" fill="none" stroke="#637e88" stroke-width="1.7" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      text { font-family: 'Chalkboard SE', 'Comic Sans MS', cursive; fill: #40453e; font-size: 23px; text-anchor: middle; }
+      .group { font-size: 21px; letter-spacing: 1.2px; }
+      .lane { font-size: 19px; fill: #73776e; }
+      .small { font-size: 18px; fill: #6a7067; }
+      .tiny { font-size: 16px; fill: #6a7067; }
+      .blue { fill: #5b7882; }
+      .line { fill: none; stroke: #555950; stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; }
+      .echo { fill: none; stroke: #777c70; stroke-width: .8; opacity: .42; }
+      .flow { fill: none; stroke: #555950; stroke-width: 2.3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow); }
+      .next { fill: none; stroke: #637e88; stroke-width: 2; stroke-dasharray: 7 6; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#next-arrow); }
+      .icon { fill: none; stroke: #50584f; stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; }
+      .hex { fill: #f8f7ee; stroke: #636c60; stroke-width: 1.8; }
+      .future-hex { fill: #f2f5f1; stroke: #72858a; stroke-width: 1.8; stroke-dasharray: 5 4; }
+      .shade { fill: url(#hatch); }
+    </style>
+
+    <!-- Reusable pencil pictograms: no vendor logos or prose-heavy cards. -->
+    <symbol id="terminal" viewBox="0 0 100 100">
+      <path class="shade" d="M12 15 H88 V70 H12 Z"/>
+      <path class="icon" d="M12 15 Q49 13 88 15 L89 70 L11 71 Z M16 19 H84 V65 H16 Z M36 72 L33 83 M64 72 L68 83 M24 84 H77 M30 35 L40 43 L30 51 M48 51 H65"/>
+      <path class="echo" d="M10 13 L90 14 L91 73 L10 74"/>
+    </symbol>
+    <symbol id="folder" viewBox="0 0 100 100">
+      <path class="shade" d="M12 28 H41 L49 36 H90 L80 81 H10 Z"/>
+      <path class="icon" d="M13 38 L13 23 L38 23 L47 32 H86 L86 43 M12 40 H91 L80 81 H10 Z M35 52 L28 61 L35 69 M62 52 L69 61 L62 69 M53 49 L45 73"/>
+      <path class="echo" d="M10 42 L89 42 L78 83 H9"/>
+    </symbol>
+    <symbol id="selector" viewBox="0 0 100 100">
+      <path class="icon" d="M17 21 H84 V81 H17 Z M17 36 H84 M26 28 H29 M35 28 H38 M44 28 H47 M29 51 H71 M29 65 H71"/>
+      <path class="shade" d="M18 22 H83 V35 H18 Z"/>
+      <circle class="icon" cx="41" cy="51" r="5" fill="#f8f7ee"/>
+      <circle class="icon" cx="60" cy="65" r="5" fill="#f8f7ee"/>
+      <path class="echo" d="M14 19 L86 20 L87 84 H15 Z"/>
+    </symbol>
+    <symbol id="auth" viewBox="0 0 100 100">
+      <path class="shade" d="M26 44 H75 V81 H26 Z"/>
+      <path class="icon" d="M25 44 H76 V81 H25 Z M34 43 V31 C34 8 68 8 68 31 V43 M42 44 V31 C42 20 60 20 60 31 V43"/>
+      <circle class="icon" cx="51" cy="59" r="5"/>
+      <path class="icon" d="M51 64 V72 M75 67 L83 73 L95 57"/>
+    </symbol>
+    <symbol id="brain" viewBox="0 0 100 100">
+      <path class="shade" d="M49 16 C24 7 13 28 19 40 C4 49 13 76 30 76 C34 90 47 86 51 79 C59 92 74 87 77 75 C95 68 95 48 82 40 C88 19 65 8 52 19 Z"/>
+      <path class="icon" d="M49 19 C34 7 19 19 22 34 C6 37 7 57 20 62 C14 77 33 90 46 80 L51 75 M53 20 C69 8 85 21 79 35 C95 41 93 59 81 63 C88 79 68 91 56 78 L51 75 M51 20 V75 M28 34 C44 31 46 45 37 49 M22 62 C31 53 41 61 38 71 M74 36 C60 32 57 45 66 50 M81 63 C69 54 61 63 64 72"/>
+    </symbol>
+    <symbol id="tools" viewBox="0 0 100 100">
+      <path class="shade" d="M27 66 L65 28 L76 39 L39 77 Z"/>
+      <path class="icon" d="M29 75 L71 33 M22 68 L33 79 L76 36 C91 36 96 20 87 12 L79 23 L70 20 L68 11 C55 15 52 28 59 36 L20 66 Q16 72 22 77 Q28 82 33 77 M23 17 L35 17 L44 32 L38 39 L23 30 Z M43 43 L75 76 Q82 83 87 76 L57 47"/>
+    </symbol>
+    <symbol id="document" viewBox="0 0 100 100">
+      <path class="icon" d="M25 14 H64 L79 30 V86 H25 Z M64 14 V30 H79 M37 42 H66 M37 54 H66 M37 66 H58 M37 77 H65"/>
+      <path class="shade" d="M26 15 H63 V31 H78 V85 H26 Z"/>
+      <path class="echo" d="M22 12 H65 L82 29 V89 H23 Z"/>
+    </symbol>
+    <symbol id="classifier" viewBox="0 0 100 100">
+      <path class="shade" d="M33 28 H73 V69 H33 Z"/>
+      <path class="icon" d="M31 27 H74 V71 H31 Z M39 19 V27 M51 19 V27 M64 19 V27 M39 71 V80 M51 71 V80 M64 71 V80 M23 36 H31 M23 49 H31 M23 61 H31 M74 36 H82 M74 49 H82 M74 61 H82 M43 40 C43 30 64 31 63 42 C63 49 53 49 53 57 M53 63 V64"/>
+    </symbol>
+    <symbol id="gate" viewBox="0 0 100 100">
+      <path class="icon" d="M12 66 A38 38 0 0 1 88 66 M17 67 H83 M50 64 L72 34 M22 47 L28 51 M49 29 V36 M77 47 L71 51"/>
+      <path class="shade" d="M51 65 L72 34 L58 68 Z"/>
+      <circle class="icon" cx="51" cy="65" r="5"/>
+    </symbol>
+    <symbol id="flash" viewBox="0 0 100 100">
+      <path class="shade" d="M56 9 L24 54 H46 L38 89 L78 40 H55 L65 9 Z"/>
+      <path class="icon" d="M56 9 L24 54 H46 L38 89 L78 40 H55 L65 9 Z"/>
+      <path class="echo" d="M54 7 L21 56 H43 L35 92"/>
+    </symbol>
+    <symbol id="blocks" viewBox="0 0 100 100">
+      <path class="shade" d="M15 47 H46 V80 H15 Z M54 18 H85 V49 H54 Z"/>
+      <path class="icon" d="M15 47 H46 V80 H15 Z M54 47 H85 V80 H54 Z M54 10 H85 V39 H54 Z M15 10 H46 V39 H15 Z M27 22 H34 M64 59 H74"/>
+    </symbol>
+    <symbol id="cache" viewBox="0 0 100 100">
+      <path class="shade" d="M23 28 Q50 43 77 28 V75 Q50 92 23 75 Z"/>
+      <ellipse class="icon" cx="50" cy="25" rx="28" ry="11"/>
+      <path class="icon" d="M22 25 V74 C22 90 78 90 78 74 V25 M22 43 C22 58 78 58 78 43 M22 59 C22 74 78 74 78 59"/>
+    </symbol>
+    <symbol id="receipt" viewBox="0 0 100 100">
+      <path class="icon" d="M26 12 H77 V87 L66 80 L56 87 L46 80 L36 87 L26 80 Z M36 31 L41 36 L49 24 M55 30 H66 M36 50 L41 55 L49 43 M55 49 H66 M36 68 H66"/>
+      <path class="shade" d="M27 13 H76 V76 H27 Z"/>
+    </symbol>
+    <symbol id="chart" viewBox="0 0 100 100">
+      <path class="icon" d="M15 15 V82 H88 M27 76 V58 H39 V76 M48 76 V42 H60 V76 M69 76 V26 H81 V76 M24 44 L46 30 L58 35 L81 13 M69 13 H81 V25"/>
+      <path class="shade" d="M28 58 H38 V76 H28 Z M49 42 H59 V76 H49 Z M70 26 H80 V76 H70 Z"/>
+    </symbol>
+    <symbol id="confirm" viewBox="0 0 100 100">
+      <path class="icon" d="M15 17 H85 V67 H48 L29 84 V67 H15 Z M33 41 L45 53 L69 29"/>
+      <path class="shade" d="M16 18 H84 V66 H47 L31 80 V66 H16 Z"/>
+    </symbol>
+  </defs>
+
+  <rect width="1700" height="1080" fill="#faf8f0" filter="url(#paper)"/>
+  <g filter="url(#pencil)">
+    <!-- Large, softly shaded architecture boundaries, as in a cloud reference. -->
+    <path d="M30 53 L272 55 L275 998 L28 1000 Z" fill="#e7ebea" fill-opacity=".8" stroke="#919b94" stroke-width="1.8" stroke-dasharray="2 4"/>
+    <path class="echo" d="M27 51 L275 52 L278 1002 L26 1003 Z"/>
+    <path d="M297 54 L691 52 L694 1000 L295 998 Z" fill="#e9eddf" fill-opacity=".75" stroke="#929b86" stroke-width="1.8" stroke-dasharray="2 4"/>
+    <path class="echo" d="M294 52 L693 50 L697 1002 L293 1001 Z"/>
+    <path d="M717 53 L1669 55 L1672 1000 L714 999 Z" fill="#e6ecec" fill-opacity=".75" stroke="#8d9d9e" stroke-width="1.8" stroke-dasharray="2 4"/>
+    <path class="echo" d="M714 50 L1672 52 L1675 1002 L711 1002 Z"/>
+    <text class="group" x="151" y="92">YOUR WORKSPACE</text>
+    <text class="group" x="495" y="92">SMART ROUTER · OPENCODE</text>
+    <text class="group" x="1194" y="92">CONNECTED MODEL WORKFLOW</text>
+    <text class="lane" x="151" y="137">01  You</text>
+    <text class="lane" x="495" y="137">02  Router + sign-in</text>
+    <text class="lane" x="855" y="137">03  Plan · Astra</text>
+    <text class="lane" x="1202" y="137">04  Build</text>
+    <text class="lane" x="1544" y="137">05  Measure</text>
+
+    <!-- Working native path. All connectors sit behind the service symbols. -->
+    <path class="flow" d="M218 260 L421 260"/>
+    <path class="flow" d="M535 260 L801 260"/>
+    <path class="flow" d="M1200 449 L1200 409 L1074 409 Q1061 409 1061 393 L1061 273 Q1061 260 1074 260 L1145 260"/>
+    <path class="flow" d="M1255 260 L1490 260"/>
+    <path class="flow" d="M108 547 L58 547 Q46 547 46 534 L46 272 Q46 260 58 260 L103 260"/>
+    <path class="flow" d="M530 456 L603 456 Q616 456 616 441 L616 260"/>
+    <text class="tiny" x="334" y="242">select</text>
+    <text class="tiny" x="666" y="242">native provider</text>
+    <text class="tiny" x="1335" y="430">selected native model</text>
+    <text class="tiny" x="1373" y="242">record</text>
+
+    <!-- Finished plan -> one classifier call -> native build model. -->
+    <path class="flow" d="M855 390 L855 463"/>
+    <text class="tiny blue" x="918" y="414">Plan → Build</text>
+    <path class="flow" d="M855 613 L855 650 L533 650"/>
+    <text class="tiny blue" x="705" y="630">finished plan</text>
+    <path class="flow" d="M478 767 L478 782"/>
+    <path class="flow" d="M529 830 L978 830 L978 706 L1040 706"/>
+    <text class="small blue" x="801" y="810">high confidence</text>
+    <path class="flow" d="M423 830 L216 830"/>
+    <text class="tiny blue" x="339" y="810">low confidence</text>
+    <path class="flow" d="M151 947 L151 971 L1005 971 L1005 752 L1040 752"/>
+    <text class="tiny blue" x="802" y="955">your confirmation</text>
+    <path class="flow" d="M1200 801 L1200 864"/>
+    <path class="flow" d="M1251 908 L1407 908 L1407 779 L1389 779"/>
+    <path class="next" d="M1392 650 L1491 650"/>
+    <text class="tiny blue" x="1443" y="629">usage</text>
+
+    <!-- Workspace devices: simple pencil illustrations, not text cards. -->
+    <use href="#terminal" x="92" y="202" width="118" height="118"/>
+    <text x="151" y="346">OpenCode terminal</text>
+    <text class="small" x="151" y="373">Choose Smart Router</text>
+    <use href="#folder" x="96" y="489" width="110" height="110"/>
+    <text x="151" y="627">Your code + task</text>
+    <text class="small" x="151" y="655">Context for the plan</text>
+    <use href="#confirm" x="101" y="782" width="100" height="100"/>
+    <text x="151" y="909">Confirm tier</text>
+    <text class="tiny blue" x="151" y="935">only if confidence is low</text>
+
+    <!-- Router, authentication, Jev, and gate use recognizable service glyphs. -->
+    <path class="hex" d="M450 212 L505 212 L533 260 L505 308 L450 308 L422 260 Z"/>
+    <path class="echo" d="M448 209 L508 210 L536 260 L507 311 L448 311 L419 260 Z"/>
+    <use href="#selector" x="434" y="217" width="88" height="88"/>
+    <text x="478" y="342">Smart Router (auto)</text>
+    <text class="small" x="478" y="368">Native OpenAI alias</text>
+
+    <path class="hex" d="M450 408 L505 408 L533 456 L505 504 L450 504 L422 456 Z"/>
+    <path class="echo" d="M448 405 L508 406 L536 456 L507 507 L448 507 L419 456 Z"/>
+    <use href="#auth" x="434" y="412" width="87" height="87"/>
+    <text x="478" y="538">Existing OpenAI sign-in</text>
+    <text class="small" x="478" y="565">Your subscription allowance</text>
+
+    <path class="hex" d="M450 602 L505 602 L533 650 L505 698 L450 698 L422 650 Z"/>
+    <use href="#classifier" x="435" y="607" width="86" height="86"/>
+    <text class="blue" x="478" y="731">Jev classifier</text>
+    <text class="tiny" x="478" y="754">Once per plan · separate service</text>
+
+    <path class="hex" d="M450 782 L505 782 L533 830 L505 878 L450 878 L422 830 Z"/>
+    <use href="#gate" x="435" y="786" width="86" height="86"/>
+    <text class="blue" x="478" y="911">Tier + confidence gate</text>
+    <text class="tiny" x="478" y="936">Infra / security risk guards</text>
+
+    <!-- Plan services. -->
+    <path class="hex" d="M827 212 L882 212 L910 260 L882 308 L827 308 L799 260 Z"/>
+    <path class="echo" d="M825 209 L885 210 L913 260 L884 311 L825 311 L796 260 Z"/>
+    <use href="#brain" x="810" y="216" width="89" height="89"/>
+    <text x="855" y="342">Astra planner</text>
+    <text class="small" x="855" y="368">Reason + make a plan</text>
+    <path class="hex" d="M827 468 L882 468 L910 516 L882 564 L827 564 L799 516 Z"/>
+    <use href="#document" x="811" y="472" width="88" height="88"/>
+    <text class="blue" x="855" y="599">Plan digest</text>
+
+    <!-- The selected native executor is never Astra. -->
+    <path class="hex" d="M1173 212 L1228 212 L1256 260 L1228 308 L1173 308 L1145 260 Z"/>
+    <path class="echo" d="M1171 209 L1231 210 L1259 260 L1230 311 L1171 311 L1142 260 Z"/>
+    <use href="#tools" x="1157" y="217" width="87" height="87"/>
+    <text x="1200" y="342">Selected executor</text>
+    <text class="small" x="1200" y="368">Native provider · no Astra</text>
+
+    <path d="M1041 449 L1387 451 L1390 800 L1038 798 Z" fill="#f8faf4" fill-opacity=".85" stroke="#819293" stroke-width="1.6"/>
+    <text class="small blue" x="1213" y="480">Jev selects the build model</text>
+    <path class="hex" d="M1109 510 L1154 510 L1177 549 L1154 588 L1109 588 L1086 549 Z"/>
+    <use href="#flash" x="1098" y="516" width="68" height="68"/>
+    <text x="1132" y="621">Free</text>
+    <text class="tiny" x="1132" y="645">GLM + others</text>
+
+    <path class="hex" d="M1270 510 L1315 510 L1338 549 L1315 588 L1270 588 L1247 549 Z"/>
+    <use href="#blocks" x="1258" y="516" width="68" height="68"/>
+    <text x="1293" y="621">Terra</text>
+    <text class="tiny" x="1293" y="645">OpenAI · routine</text>
+
+    <path class="hex" d="M1177 654 L1222 654 L1245 693 L1222 732 L1177 732 L1154 693 Z"/>
+    <use href="#brain" x="1165" y="659" width="70" height="70"/>
+    <text x="1200" y="763">Sol</text>
+    <text class="tiny" x="1200" y="788">OpenAI · complex / risky</text>
+
+    <path class="hex" d="M1177 869 L1222 869 L1245 908 L1222 947 L1177 947 L1154 908 Z"/>
+    <use href="#cache" x="1165" y="873" width="70" height="70"/>
+    <text class="small blue" x="1200" y="981">Session cache · reuse tier</text>
+
+    <!-- Measurement services. -->
+    <path class="hex" d="M1518 212 L1573 212 L1601 260 L1573 308 L1518 308 L1490 260 Z"/>
+    <path class="echo" d="M1516 209 L1576 210 L1604 260 L1575 311 L1516 311 L1487 260 Z"/>
+    <use href="#receipt" x="1502" y="216" width="87" height="87"/>
+    <text x="1545" y="342">Route receipt</text>
+    <text class="small" x="1545" y="368">Model + confidence</text>
+
+    <path class="future-hex" d="M1518 602 L1573 602 L1601 650 L1573 698 L1518 698 L1490 650 Z"/>
+    <use href="#chart" x="1502" y="607" width="87" height="87"/>
+    <text class="blue" x="1545" y="733">Usage + latency</text>
+    <text class="small" x="1545" y="761">Allowance / savings</text>
+    <text class="tiny" x="1545" y="787">vs. always-top</text>
+
+    <!-- Compact canvas-only legend; short enough to read at README scale. -->
+    <path class="flow" d="M36 1036 L88 1036"/>
+    <text class="small" text-anchor="start" style="text-anchor:start" x="102" y="1042">Working now</text>
+    <path class="next" d="M273 1036 L325 1036"/>
+    <text class="small blue" style="text-anchor:start" x="339" y="1042">Planned next</text>
+    <text class="small" x="1126" y="1042">Existing provider connections. No silent paid-API fallback.</text>
+  </g>
+</svg>

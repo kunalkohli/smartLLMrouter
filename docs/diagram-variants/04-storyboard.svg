@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="800" viewBox="0 0 1400 800" role="img" aria-label="D · Two modes, two jobs">
+<defs>
+  <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="3" seed="9" result="noise"/><feColorMatrix in="noise" type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".03"/></feComponentTransfer><feBlend in="SourceGraphic" mode="multiply"/></filter>
+  <filter id="pencil" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="2" seed="17" result="grain"/><feDisplacementMap in="SourceGraphic" in2="grain" scale=".8" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto"><path d="M2 2 L10 6 L2 10" fill="none" stroke="#535b51" stroke-width="1.6" stroke-linejoin="round"/></marker>
+  <style>
+    text { font-family:'Chalkboard SE','Comic Sans MS',cursive; fill:#394239; text-anchor:middle; }
+    .route { fill:none; stroke:#535b51; stroke-width:2.2; stroke-linejoin:round; stroke-linecap:round; marker-end:url(#arrow); }
+    .note { fill:none; stroke:#7b8e95; stroke-width:1.8; stroke-dasharray:6 5; stroke-linejoin:round; }
+    .echo { fill:none; stroke:#868b7c; stroke-width:.7; opacity:.4; }
+  </style>
+</defs>
+<rect width="1400" height="800" fill="#faf8f0" filter="url(#paper)"/>
+<g filter="url(#pencil)">
+<text x="45" y="56" font-size="31" style="text-anchor:start;fill:#394239">D · Two modes, two jobs</text>
+<text x="45" y="96" font-size="21" style="text-anchor:start;fill:#6a7468">Astra makes the plan. The model Jev chooses does the implementation.</text>
+<path d="M45 145 Q255.0 143 465 146 L466 630 Q255.0 632 44 629 Z" fill="#f3f0e3" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M43 143 L467 144 L468 632 L43 632" class="echo"/>
+<path d="M510 145 Q932.5 143 1355 146 L1356 630 Q932.5 632 509 629 Z" fill="#edf2ed" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M508 143 L1357 144 L1358 632 L508 632" class="echo"/>
+<text x="255" y="190" font-size="27" style="text-anchor:middle;fill:#394239">1 · PLAN</text>
+<text x="932" y="190" font-size="27" style="text-anchor:middle;fill:#394239">2 · BUILD</text>
+<text x="255" y="235" font-size="22" style="text-anchor:middle;fill:#394239">Select smartrouter - openai</text>
+<text x="932" y="226" font-size="20" style="text-anchor:middle;fill:#394239">Switch mode + send the first Build instruction</text>
+<path d="M100 285 Q255.0 283 410 286 L411 425 Q255.0 427 99 424 Z" fill="#faf8ec" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M98 283 L412 284 L413 427 L98 427" class="echo"/>
+<text x="255.0" y="312" font-size="16" style="text-anchor:middle;fill:#758071">PLANNER</text>
+<text x="255.0" y="349" font-size="32" style="text-anchor:middle;fill:#394239">Astra</text>
+<text x="255.0" y="379" font-size="18" style="text-anchor:middle;fill:#667260">Your existing OpenAI sign-in</text>
+<text x="255" y="530" font-size="27" style="text-anchor:middle;fill:#394239">Astra only plans.</text>
+<text x="255" y="568" font-size="22" style="text-anchor:middle;fill:#394239">It never executes Build.</text>
+<path d="M410 355 L555 355" class="route"/>
+<path d="M555 285 Q670.0 283 785 286 L786 425 Q670.0 427 554 424 Z" fill="#eaf1f1" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M553 283 L787 284 L788 427 L553 427" class="echo"/>
+<text x="670.0" y="312" font-size="16" style="text-anchor:middle;fill:#758071">CLASSIFIER</text>
+<text x="670.0" y="349" font-size="27" style="text-anchor:middle;fill:#394239">Jev · once</text>
+<text x="670.0" y="379" font-size="18" style="text-anchor:middle;fill:#667260">Family + model choices</text>
+<text x="670.0" y="404" font-size="18" style="text-anchor:middle;fill:#667260">Both confidences shown</text>
+<path d="M785 355 L840 355" class="route"/>
+<path d="M840 270 Q1070.0 268 1300 271 L1301 435 Q1070.0 437 839 434 Z" fill="#f8faf1" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M838 268 L1302 269 L1303 437 L838 437" class="echo"/>
+<text x="1070" y="302" font-size="17" style="text-anchor:middle;fill:#6a7b70">JEV CHOOSES THE BUILD ROUTE</text>
+<text x="1070" y="349" font-size="25" style="text-anchor:middle;fill:#394239">Free · GLM / other free models</text>
+<text x="1070" y="395" font-size="25" style="text-anchor:middle;fill:#394239">OpenAI · Terra or Sol</text>
+<path d="M1070 435 L1070 490" class="route"/>
+<path d="M840 495 Q1070.0 493 1300 496 L1301 610 Q1070.0 612 839 609 Z" fill="#f8faf1" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M838 493 L1302 494 L1303 612 L838 612" class="echo"/>
+<text x="1070.0" y="522" font-size="16" style="text-anchor:middle;fill:#758071">EXECUTE + REUSE</text>
+<text x="1070.0" y="559" font-size="27" style="text-anchor:middle;fill:#394239">Chosen native model</text>
+<text x="1070.0" y="589" font-size="18" style="text-anchor:middle;fill:#667260">Picker updates · session cache reuses choice</text>
+<path d="M670 425 L670 475" class="note"/>
+<path d="M555 480 Q670.0 478 785 481 L786 610 Q670.0 612 554 609 Z" fill="#f0f2ef" stroke="#6e796b" stroke-width="1.7"/>
+<path d="M553 478 L787 479 L788 612 L553 612" class="echo"/>
+<text x="670.0" y="507" font-size="16" style="text-anchor:middle;fill:#758071">BELOW 0.80</text>
+<text x="670.0" y="544" font-size="24" style="text-anchor:middle;fill:#394239">Approve first</text>
+<text x="670.0" y="574" font-size="18" style="text-anchor:middle;fill:#667260">Before Build executes</text>
+<text x="700" y="685" font-size="21" style="text-anchor:middle;fill:#394239">Infra / security guards may require Sol. Low-confidence choices never auto-execute.</text>
+<path d="M45 730 Q690 727 1355 730" class="echo"/>
+<text x="700" y="757" font-size="18" style="text-anchor:middle;fill:#394239">Astra: Plan only  ·  Free models if sufficient  ·  Terra/Sol for more judgment  ·  Cache the chosen route</text>
+<text x="700" y="784" font-size="16" style="text-anchor:middle;fill:#7a8174">Existing OpenAI sign-in or keyless free models. Jev is a separate classifier service.</text>
+</g>
+</svg>
